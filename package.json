@@ -1,0 +1,22 @@
+{
+  "name": "apcc-task-manager",
+  "version": "2.0.0",
+  "description": "Apcc task manager",
+  "keywords": [
+    "APCC",
+    "Manager",
+    "Documents"
+  ],
+  "license": "ISC",
+  "author": "NickJApps",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1"
+  }
+}
