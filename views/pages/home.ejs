@@ -1,11 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Hello world</h1>
-</body>
-</html>
+<div class="container container-border">
+    <div class="formbold-form-wrapper">
+
+        <h1 class="section-title">Поиск</h1>
+        <p>По ИМЕНИ или ОГРН / ОГРНИП</p>
+        <div class="flex flex-wrap formbold--mx-3">
+            <div class="w-full">
+                <div class="formbold-mb-5 w-full">
+                    <div class="formbold-mb-5 input-search">
+                        <input id="search-input" type="text" class="formbold-form-input" />
+                        <div id="search-results" class="search-results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="result-serch-tbl invisible">
+        <table class="responsive-table">
+            <thead>
+                <p class="search-result-title">Результат поиска:</p>
+                <tr>
+                    <th class="td-w4" scope="col">№</th>
+                    <th class="td-w12" scope="col">создан</th>
+                    <th class="td-w12" scope="col">инн</th>
+                    <th class="td-w12" scope="col">огрн</th>
+                    <th class="td-w22" scope="col">имя</th>
+                    <th class="td-w4" scope="col">платформа</th>
+                    <th class="td-w12" scope="col">статус</th>
+                    <th class="td-w12" scope="col">изменен</th>
+                    <th class="" scope="col">исп.</th>
+                </tr>
+            </thead>
+            <tbody id="search-table">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Цели -->
+<div class="container target-container">
+    <table class="responsive-table">
+        <h1 class="section-title">Цели</h1>
+        <div class="comment-mark">
+            <ul>
+                <li>
+                    <div class="comment-mark-item">
+                        <p>Цель маркированная "</p><img src="../icons/label-important.png" alt="">
+                        <p>" намечена для закупки.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="comment-mark-item">
+                        <p>Цель маркированная "</p><img src="../icons/purchase-check.png" alt="">
+                        <p>" ожидание доставки заказа.</p>
+                    </div>
+                </li>
+                <li>
+                    <p>Для немаркированных целей смотри комментарий.</p>
+                </li>
+            </ul>
+        </div>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+                <th scope="col">марк.</th>
+                <th scope="col">ожид.</th>
+            </tr>
+        </thead>
+        <tbody id="targets-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!-- Закупки -->
+
+<div class="container test-purchase-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Закупки</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="purchase-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!-- Претензия -->
+
+<div class="container letter-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Претензия</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="letter-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!-- Арбитраж -->
+
+<div class="container lawsuit-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Арбитраж</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="lawsuit-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!--Апелляция-->
+
+<div class="container appeal-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Апелляция</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="appeal-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!--исполнительное-->
+
+<div class="container execution-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Исполнительное производство</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="execution-table">
+
+        </tbody>
+    </table>
+</div>
+
+<!--производство приостановлено -->
+
+<div class="container suspended-container invisible">
+    <table class="responsive-table">
+        <h1 class="section-title">Приостановленные дела</h1>
+        <thead>
+            <tr>
+                <th class="td-w4" scope="col">№</th>
+                <th class="td-w12" scope="col">создан</th>
+                <th class="td-w12" scope="col">инн</th>
+                <th class="td-w12" scope="col">огрн</th>
+                <th class="td-w22" scope="col">имя</th>
+                <th class="td-w4" scope="col">платформа</th>
+                <th class="td-w12" scope="col">статус</th>
+                <th class="td-w12" scope="col">изменен</th>
+                <th scope="col">исп</th>
+            </tr>
+        </thead>
+        <tbody id="suspended-table">
+
+        </tbody>
+    </table>
+</div>

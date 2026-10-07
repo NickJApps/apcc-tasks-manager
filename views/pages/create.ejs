@@ -1,0 +1,252 @@
+<div class="wrapper">
+    <h1 class="page-title">создать задачу</h1>
+    <form id="details-form">
+
+
+        <!-- Общая информация о селлере -->
+        <section class="details-secction">
+            <!-- Заголовок -->
+            <h2 class="section-title">ОБЩИЕ</h2>
+
+            <div class="details-grid">
+                <!-- Дата создания -->
+                <div class="field-label create-field-label">
+                    <span>Дата создания</span>
+                </div>
+                <div class="field-value">
+                    <input type="date">
+                </div>
+
+                <!-- Seller -->
+                <span class="field-label seller-label">Имя / Наименование</span>
+                <div class="field-value seller-value">
+                    <input type="text">
+                </div>
+
+                <!-- ITN -->
+
+                <div class="field-label">
+                    <span>ИНН</span>
+                </div>
+
+                <div class="field-value">
+                    <input type="text">
+                </div>
+
+                <!-- PSRN -->
+                <div class="field-label">
+                    <span>ОГРН / ОГРНИП</span>
+                </div>
+
+                <div class="field-value">
+                    <input type="text">
+                </div>
+
+                <!-- Region -->
+                <div class="field-label">
+                    <span>Регион</span>
+                </div>
+
+                <div class="field-value wide-value">
+                    <input type="text">
+                </div>
+
+                <!-- Address -->
+                <div class="field-label">
+                    <span>Адрес</span>
+                </div>
+
+                <div class="field-value wide-value">
+                    <input type="text">
+                </div>
+
+
+                <!-- Comment -->
+                <span class="field-label comment-label">Комментарий</span>
+
+                <div class="field-value comment-value">
+                    <textarea name="comment"></textarea>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Загрузить данные по селлеру-->
+
+        <section class="details-secction">
+            <div class="create-btn-container">
+                <button class="get-seller-info-btn" type="button">Получить данные селлерa по ОГРН</button>
+            </div>
+        </section>
+
+        <!-- Информация по магазину -->
+
+        <section class="details-secction">
+
+            <h2 class="section-title">ДЕТАЛИ ПО МАГАЗИНУ</h2>
+
+            <div class="store-details">
+                <div class="store-grid">
+
+                    <!-- PLATFORM -->
+                    <div class="field-label">
+                        <span>Платформа</span>
+                    </div>
+
+                    <div class="field-value platform-value">
+                        <select name="platform" id="platform">
+                            <option value="ozon">Ozon</option>
+                            <option value="wildberries">Wildberries</option>
+                            <option value="yandex">Яндекс Маркет</option>
+                        </select>
+                    </div>
+
+
+                    <!-- STORE LINK -->
+                    <div class="field-label">
+                        <span>Ссылка на магазин</span>
+                    </div>
+
+                    <div class="field-value store-link-value">
+                        <input type="text" name="store-link" id="store-link"
+                            value="www.wildberries.ru/seller/123456789">
+
+                        <button type="button" class="link-btn" id="store-link-btn" title="Перейти в магазин">
+                            ↗
+                        </button>
+                    </div>
+
+
+                    <!-- REVENUE -->
+                    <div class="field-label">
+                        <span>Выручка</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="revenue" id="revenue" value="1234567">
+                    </div>
+
+
+                    <!-- SALES -->
+                    <div class="field-label">
+                        <span>Кол-во продаж</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="sales" id="sales" value="123456">
+                    </div>
+
+
+                    <!-- STOCK -->
+                    <div class="field-label">
+                        <span>Остаток</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="stock" id="stock" value="123456">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!--Информация по закупке-->
+
+        <section class="details-secction">
+            <h2 class="section-title">ДЕТАЛИ ПО ТОВАРУ</h2>
+
+            <div class="store-details">
+                <div class="product-grid">
+
+                    <!-- PRODUCT -->
+                    <div class="field-label">
+                        <span>Продукт</span>
+                    </div>
+
+                    <div class="field-value product-select">
+                        <select name="product" id="product">
+                            <option value="dualshock4">DualShock 4</option>
+                            <option value="dualshock5">DualSense</option>
+                            <option value="ps5">PlayStation 5</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PRODUCT LINK -->
+                    <div class="field-label">
+                        <span>Ссылка на товар</span>
+                    </div>
+
+                    <div class="field-value product-link-value">
+
+                        <input type="text" name="product-link" id="product-link"
+                            value="www.wildberries.ru/seller/123456789/dualshock4">
+
+                        <button type="button" class="link-btn" id="product-link-btn" title="Перейти к товару">
+                            ↗
+                        </button>
+
+                    </div>
+
+
+                    <!-- PRICE -->
+                    <div class="field-label">
+                        <span>Цена</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="price" id="price" value="1234567">
+                    </div>
+
+
+                    <!-- PURCHASE DATE -->
+                    <div class="field-label">
+                        <span>Дата закупки</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                </div>
+                <div class="product-control">
+                    <button title="Добавить товар"> &plus; </button>
+                    <button title="Удалить товар"> &minus; </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Исполнитель -->
+
+        <section class="details-section">
+            <div class="store-details">
+                <h2 class="section-title">ИСПОЛНИТЕЛЬ</h2>
+                <div class="case-grid case-grid-2">
+
+                    <div class="field-label">
+                        <span>Исполнитель</span>
+                    </div>
+
+                    <div class="field-value product-select">
+                        <select name="product" id="product">
+                            <option value="dualshock4">APCC</option>
+                            <option value="dualshock5">Мишанский</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Save Button -->
+
+        <section class="details-section">
+            <div class="create-btn-container">
+                <button class="save-seller-button" type="button">Сохранить</button>
+            </div>
+        </section>
+
+    </form>
+</div>

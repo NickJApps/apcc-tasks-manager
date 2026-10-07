@@ -1,0 +1,948 @@
+@import "variables";
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("../fonts/Montserrat-VariableFont_wght.ttf");
+}
+
+/*===========================
+    PAGE TITLE SECTION TITLE
+=============================*/
+
+.page-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 20px 0 20px 0;
+    text-transform: uppercase;
+}
+
+/*====================
+    MAIN PAGE
+=====================*/
+
+/* Header menu */
+.header-container {
+    margin: 0 auto;
+    background: #3c3c3c;
+    display: flex;
+    justify-content: center;
+
+    nav {
+        width: 100%;
+        font-family: $montserratFontFanily;
+        font-weight: 300;
+        max-width: 1500px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        label {
+            color: white;
+            font-size: 13px;
+            padding: 0 100px;
+            font-family: $montserratFontFanily;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        ul {
+            float: right;
+            margin-right: 20px;
+        }
+
+        ul li {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        ul li a {
+            color: white;
+            font-size: 12px;
+            padding: 7px 13px;
+            border-radius: 3px;
+            text-transform: uppercase;
+            font-weight: 400;
+            text-decoration: none;
+            font-family: $montserratFontFanily;
+        }
+    }
+}
+
+.header-container nav a.active,
+.header-container nav a:hover {
+    background: #141414;
+    transition: 0.5s;
+    font-weight: 500;
+    background: none;
+    color: #27db2e;
+    background: #7a7474;
+}
+
+.header-container nav a:focus {
+    color: #27db2e;
+    background: #7a7474;
+}
+
+@media (max-width: 1050px) {
+    label.logo {
+        padding-left: 30px;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+}
+
+/* Comment */
+
+.comment-mark {
+
+    ul li {
+        list-style-type: disc;
+
+        p {
+            font-weight: 500;
+            font-size: 14px;
+            color: #07074d;
+            font-family: $montserratFontFanily;
+            font-weight: 300;
+            font-style: italic;
+            margin: 0;
+        }
+    }
+
+    .comment-mark-item {
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 16px;
+            height: 16px;
+            margin: 0 2px 0 2px;
+        }
+    }
+
+    .comment-mark-item p:nth-of-type(2) {
+        font-weight: $fontSemiBold;
+    }
+
+}
+
+/*====================
+    MAIN PAGE TABLE
+=====================*/
+
+
+.container {
+    margin: 5% 3%;
+}
+
+.responsive-table thead {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+.td-w4 {
+    width: 4%;
+}
+
+.td-w10 {
+    width: 10%;
+}
+
+.td-w12 {
+    width: 12%;
+}
+
+.td-w22 {
+    width: 22%;
+}
+
+.invisible {
+    display: none;
+}
+
+.search-result-title {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #878181;
+}
+
+.container-border {
+    border: 1px dotted #a3a3a3;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.formbold-main-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 48px;
+}
+
+.formbold-form-wrapper {
+    margin: 0 auto;
+    max-width: 550px;
+    width: 100%;
+    background: white;
+}
+
+.formbold-form-wrapper p {
+    text-align: center;
+    font-size: 12px;
+    margin-bottom: 3px;
+    color: #878181;
+}
+
+.formbold-form-label {
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    color: #07074d;
+    margin-bottom: 12px;
+    font-family: "Roboto";
+    font-weight: 300;
+}
+
+.formbold-form-label-2 {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.formbold-form-input {
+    width: 100%;
+    padding: 5px 5px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    background: white;
+    font-weight: 500;
+    font-size: 16px;
+    color: #6b7280;
+    outline: none;
+    resize: none;
+    border: 1px solid rgb(134, 188, 37);
+    font-family: "Roboto";
+    font-weight: 400;
+    color: #000000;
+    font-size: 14px;
+}
+
+.formbold-form-input:focus {
+    border-color: #6a64f1;
+    -webkit-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.formbold-btn {
+    text-align: center;
+    font-size: 16px;
+    padding: 10px 32px;
+    font-weight: 500;
+    color: white;
+    width: 100%;
+    cursor: pointer;
+    background-color: #005af0;
+    border: none;
+    border-radius: 5px;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.formbold-btn:hover {
+    text-decoration: none;
+    background-color: #ffffff;
+    color: #005af0;
+    border: none;
+    outline: 1px solid #010101;
+}
+
+.check-btn-container {
+    margin-top: 45px;
+}
+
+.responsive-table thead th {
+    background-color: rgb(84 87 83);
+    border: 1px solid rgb(134, 188, 37);
+    font-weight: normal;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-family: "Montserrat";
+    font-weight: $tableFieldHeaderFontWeight;
+}
+
+.responsive-table thead th:first-of-type {
+    text-align: center;
+}
+
+.responsive-table tbody,
+.responsive-table tr,
+.responsive-table th,
+.responsive-table td {
+    display: block;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 0.5em;
+    vertical-align: middle;
+}
+
+.responsive-table caption {
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.responsive-table tbody tr {
+    margin-bottom: 1em;
+}
+
+.responsive-table tbody tr:last-of-type {
+    margin-bottom: 0;
+}
+
+.responsive-table tbody tr:hover {
+    background-color: rgb(213, 223, 223);
+    cursor: pointer;
+}
+
+.responsive-table tbody th[scope=row] {
+    background-color: rgb(38, 137, 13);
+    color: white;
+}
+
+.responsive-table tbody td {
+    text-align: center;
+}
+
+.responsive-table {
+    width: 100%;
+    margin-bottom: 1.5em;
+    border-spacing: 0;
+}
+
+.responsive-table tbody td[data-type=currency] {
+    text-align: center;
+}
+
+.responsive-table tbody td[data-title]:before {
+    content: attr(data-title);
+    float: left;
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* Media */
+
+@media (min-width: 48em) {
+    .responsive-table tr {
+        display: table-row;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table thead {
+        position: relative;
+        clip: auto;
+        height: auto;
+        width: auto;
+        overflow: auto;
+    }
+}
+
+@media (min-width: 30em) {
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 0.75em 0.5em;
+    }
+}
+
+@media (min-width: 48em) {
+
+    .responsive-table th,
+    .responsive-table td {
+        display: table-cell;
+        padding: 0.5em;
+    }
+}
+
+@media (min-width: 62em) {
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 0.75em 0.5em;
+    }
+}
+
+@media (min-width: 75em) {
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 0.75em;
+    }
+}
+
+
+@media (min-width: 48em) {
+    .responsive-table caption {
+        font-size: 1.5em;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody {
+        display: table-row-group;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody tr {
+        display: table-row;
+        border-width: 1px;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody tr:nth-of-type(even) {
+        background-color: rgba(167, 163, 163, 0.12);
+    }
+}
+
+@media (min-width: 30em) {
+    .responsive-table tbody th[scope=row] {
+        border-left: 1px solid rgb(134, 188, 37);
+        border-bottom: 1px solid rgb(134, 188, 37);
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody th[scope=row] {
+        background-color: transparent;
+        color: rgb(0, 0, 0.87);
+        text-align: left;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody td {
+        border-left: 1px solid rgb(134, 188, 37);
+        border-bottom: 1px solid rgb(134, 188, 37);
+        text-align: center;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody td:last-of-type {
+        border-right: 1px solid rgb(134, 188, 37);
+    }
+}
+
+@media (min-width: 30em) {
+    .responsive-table tbody td[data-title]:before {
+        font-size: 0.9em;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table tbody td[data-title]:before {
+        content: none;
+    }
+}
+
+
+@media (min-width: 48em) {
+    .container {
+        margin: 2%;
+    }
+}
+
+@media (min-width: 75em) {
+    .container {
+        margin: 2em auto;
+        max-width: 75em;
+    }
+}
+
+@media (min-width: 48em) {
+    .responsive-table {
+        font-size: 0.72em;
+    }
+}
+
+@media (min-width: 62em) {
+    .responsive-table {
+        font-size: 0.72em;
+    }
+}
+
+
+
+/*==============================
+other pages 
+===============================*/
+
+.wrapper {
+    width: 45%;
+    margin: 0 auto;
+    min-width: 900px;
+}
+
+.field-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 9px;
+    background: rgb(96 96 102 / 1);
+    border: 1px solid rgb(134 188 37 / 1);
+    font-family: $montserratFontFanily;
+    font-size: 12px;
+    font-weight: $tableFieldHeaderFontWeight;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.created-date {
+    grid-column: 4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    background: rgb(96 96 102);
+    border: 1px solid rgb(134 188 37 / 1);
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 13px;
+}
+
+.field-value {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: flex-end;
+    border: 1px solid rgb(134 188 37 / 1);
+}
+
+
+.field-value input {
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    text-align: right;
+}
+
+.field-value input:focus {
+    outline: none;
+    border-bottom: 1px solid #555;
+}
+
+
+
+.field-value input:focus,
+.platform-value select:focus {
+    outline: none;
+}
+
+.link-btn {
+    width: 25px;
+    height: 25px;
+    margin-left: 4px;
+    border: 2px solid #111;
+    border-radius: 8px;
+    background: transparent;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.field-value select {
+    width: 100%;
+    padding-right: 15px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* =====================
+    SELLER DETAILS
+======================= */
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 22% 28% 22% 28%;
+    grid-auto-rows: 30px;
+}
+
+
+.seller-label {
+    grid-column: 1;
+}
+
+.seller-value {
+    grid-column: 2 / 5;
+}
+
+.wide-value {
+    grid-column: 2 / 5;
+}
+
+/*=========================
+    STORE INFO
+==========================*/
+
+.store-grid {
+    display: grid;
+    grid-template-columns: 22% 15% 20% 15% 15% 13%;
+    grid-auto-rows: 30px;
+}
+
+.comment-label,
+.comment-value {
+    grid-row: span 3;
+}
+
+.comment-value {
+    grid-column: 2 / 5;
+    padding: 9px 20px;
+    align-items: stretch;
+}
+
+.comment-value textarea {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    resize: none;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+
+.platform-value {
+    grid-column: 2 / 7;
+}
+
+.platform-value select {
+    width: 100%;
+    height: 55px;
+
+    border: none;
+    outline: none;
+
+    background-color: transparent;
+
+    font-size: 14px;
+    text-align: right;
+
+    padding-right: 15px;
+}
+
+
+/* =========================
+   STORE LINK
+   ========================= */
+
+.store-link-value {
+    grid-column: 2 / 7;
+    padding-right: 15px;
+}
+
+
+/* ==================
+    PURCHASES 
+=================== */
+
+.product-details {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 22% 28% 22% 28%;
+    grid-auto-rows: 30px;
+}
+
+.product-link-value {
+    grid-column: 2 / 5;
+    padding-right: 15px;
+}
+
+.product-link-value input {
+    flex: 1;
+}
+
+.create-field-label {
+    grid-column: 3;
+}
+
+/* add product buttons */
+
+.product-control {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.product-control button {
+    width: 27px;
+    height: 26px;
+    margin-left: 4px;
+    border: 2px solid #111;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 17px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+
+.product-select {
+    grid-column: 2 / 5;
+}
+
+
+.case-grid-2 {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-auto-rows: 30px;
+}
+
+.case-grid-4 {
+    display: grid;
+    grid-template-columns: 23% 34% 23% 20%;
+    grid-auto-rows: 30px;
+}
+
+
+
+/* Create and Get Seller`s Info Button*/
+.create-btn-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-btn-container button {
+    width: 40%;
+    height: 30px;
+    color: #fff;
+}
+
+.create-btn-container .get-seller-info-btn {
+    background-color: #005af0;
+}
+
+.create-btn-container .save-seller-button {
+    background-color: #258034
+}
+
+.create-btn-container button:hover {
+    cursor: pointer;
+}
+
+/* Details Button Container */
+
+.details-btn-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.details-btn-container button {
+    width: 50%;
+    height: 30px;
+    background-color: #005af0;
+    color: #fff;
+}
+
+.details-btn-container button:nth-child(1) {
+    margin-right: 5px;
+    background-color: #b84747;
+}
+
+.details-btn-container button:nth-child(3) {
+    margin-left: 5px;
+    background-color: rgb(45, 161, 97);
+}
+
+.details-btn-container button:hover {
+    cursor: pointer;
+}
+
+.details-btn-container button:nth-child(3) {
+    display: none;
+}
+
+/* Save changes Button */
+.save-btn-container button {
+    height: 50px;
+    position: fixed;
+    right: 30px;
+    bottom: 8px;
+    background-color: rgb(45, 161, 97);
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+.save-btn-container button:hover {
+    cursor: pointer;
+}
+
+
+
+/* ========================
+Media
+======================== */
+
+/* Save button */
+@media (min-width: 1153px) and (max-width: 1310px) {
+    .save-btn-container button {
+        right: 10px;
+        bottom: 7px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 1040px) and (max-width: 1153px) {
+    .save-btn-container button {
+        right: 8px;
+        bottom: 7px;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1040px) {
+    .save-btn-container button {
+        width: 40px;
+        height: 40px;
+        right: 8px;
+        bottom: 7px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 1106px) {
+
+    .save-btn-out {
+        display: none;
+    }
+
+    .details-btn-container button:nth-child(3) {
+        display: block;
+    }
+
+}
+
+/* ====================
+PROGRESS
+====================== */
+
+.progress-section {
+    margin: 22px 0 80px 0;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 25px;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   STEP
+   ========================= */
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.step-circle {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #aeb3b7;
+    color: #fff;
+    font-size: 13px;
+}
+
+
+/* =========================
+   STEP TEXT
+   ========================= */
+
+.progress-step span {
+    margin-left: 15px;
+    white-space: nowrap;
+    font-family: $montserratFontFanily;
+    font-size: 13px;
+}
+
+
+/* =========================
+   LINE
+   ========================= */
+
+.progress-line {
+    flex: 1;
+    height: 3px;
+    min-width: 10px;
+    margin: 0 12px;
+    background: #9aa9bf;
+}
+
+
+/* =========================
+   ACTIVE
+   ========================= */
+
+.progress-step.active .step-circle {
+    background: #2bc77b;
+}
+
+.progress-step.active span {
+    color: #2bc77b;
+}
+
+.progress-line.active {
+    background: #2bc77b;
+}

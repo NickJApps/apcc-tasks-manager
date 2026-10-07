@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import expressLayouts from "express-ejs-layouts";
 import router from "./src/router/router.js";
 
 dotenv.config();
@@ -10,8 +11,10 @@ const PORT = process.env.PORT || 4500;
 app.use(express.static("public"));
 
 app.set("view engine", "ejs");
+app.set("views", "./views");
 
-// Подключение маршрутов
+app.use(expressLayouts);
+app.set("layout", "layouts/main");
 app.use("/", router);
 
 app.listen(PORT, () => {

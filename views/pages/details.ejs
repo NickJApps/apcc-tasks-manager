@@ -1,0 +1,414 @@
+<div class="wrapper">
+    <h1 class="page-title">Движение дела</h1>
+
+    <section class="details-section progress-section">
+
+        <h2 class="section-title">Прогресс</h2>
+
+        <div class="progress">
+
+            <div class="progress-step active">
+                <div class="step-circle">1</div>
+                <span>Создан</span>
+            </div>
+
+            <div class="progress-line active"></div>
+
+            <div class="progress-step">
+                <div class="step-circle">2</div>
+                <span>Закупка</span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <div class="step-circle">3</div>
+                <span>Претензия</span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <div class="step-circle">4</div>
+                <span>Арбитраж</span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <div class="step-circle">5</div>
+                <span>Апелляция</span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-step">
+                <div class="step-circle">6</div>
+                <span>Исполнительное</span>
+            </div>
+        </div>
+
+    </section>
+
+    <form id="details-form">
+        <!-- Общая информация о селлере -->
+        <section class="details-section">
+
+            <!-- Заголовок -->
+            <h2 class="section-title">ОБЩИЕ</h2>
+
+            <div class="details-grid">
+                <!-- Дата создания -->
+                <div class="created-date">
+                    <span>Дата создания</span>
+                    <label>12.12.2026</label>
+                </div>
+
+                <!-- Seller -->
+                <span class="field-label seller-label">Имя / Наименование</span>
+                <div class="field-value seller-value">
+                    <label>Епремян Нырок Варданович</label>
+                </div>
+
+                <!-- ITN -->
+                <div class="field-label">
+                    <span>ИНН</span>
+                </div>
+
+                <div class="field-value">
+                    <label>12345678</label>
+                </div>
+
+                <!-- PSRN -->
+                <div class="field-label">
+                    <span>ОГРН / ОГРНИП</span>
+                </div>
+
+                <div class="field-value">
+                    <label>1234567890</label>
+                </div>
+
+                <!-- Region -->
+                <div class="field-label">
+                    <span>Регион</span>
+                </div>
+
+                <div class="field-value wide-value">
+                    <input type="text" name="region" value="Lorem ipsum dolor sit amet">
+                </div>
+
+                <!-- Address -->
+                <div class="field-label">
+                    <span>Адрес</span>
+                </div>
+
+                <div class="field-value wide-value">
+                    <input type="text" name="address" value="Seller Seller Seller">
+                </div>
+
+
+                <!-- Comment -->
+                <span class="field-label comment-label">Комментарий</span>
+
+                <div class="field-value comment-value">
+                    <textarea name="comment"></textarea>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Информация по магазину -->
+
+        <section class="details-section">
+            <div class="store-details">
+
+                <h2 class="section-title">ДЕТАЛИ ПО МАГАЗИНУ</h2>
+
+                <div class="store-grid">
+
+                    <!-- PLATFORM -->
+                    <div class="field-label">
+                        <span>Платформа</span>
+                    </div>
+
+                    <div class="field-value platform-value">
+                        <select name="platform" id="platform">
+                            <option value="ozon">Ozon</option>
+                            <option value="wildberries">Wildberries</option>
+                            <option value="yandex">Яндекс Маркет</option>
+                        </select>
+                    </div>
+
+
+                    <!-- STORE LINK -->
+                    <div class="field-label">
+                        <span>Ссылка на магазин</span>
+                    </div>
+
+                    <div class="field-value store-link-value">
+                        <input type="text" name="store-link" id="store-link"
+                            value="www.wildberries.ru/seller/123456789">
+                        <button type="button" class="link-btn" id="store-link-btn" title="Перейти в магазин">↗</button>
+
+                        <button type="button" class="link-btn" title="Очистить поле">&#x2715</button>
+
+                    </div>
+
+
+                    <!-- REVENUE -->
+                    <div class="field-label">
+                        <span>Выручка</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="revenue" id="revenue" value="1234567">
+                    </div>
+
+
+                    <!-- SALES -->
+                    <div class="field-label">
+                        <span>Кол-во продаж</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="sales" id="sales" value="123456">
+                    </div>
+
+
+                    <!-- STOCK -->
+                    <div class="field-label">
+                        <span>Остаток</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="stock" id="stock" value="123456">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!--Информация по закупке-->
+
+        <section class="details-section">
+            <div class="store-details">
+
+                <h2 class="section-title">ДЕТАЛИ ПО ТОВАРУ</h2>
+
+                <div class="product-grid">
+
+                    <!-- PLATFORM -->
+                    <div class="field-label">
+                        <span>Платформа</span>
+                    </div>
+
+                    <div class="field-value">
+                        <select name="platform" id="platform">
+                            <option value="ozon">Ozon</option>
+                            <option value="wildberries">Wildberries</option>
+                            <option value="yandex">Яндекс Маркет</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PRODUCT -->
+                    <div class="field-label">
+                        <span>Продукт</span>
+                    </div>
+
+                    <div class="field-value">
+                        <select name="product" id="product">
+                            <option value="dualshock4">DualShock 4</option>
+                            <option value="dualshock5">DualSense</option>
+                            <option value="ps5">PlayStation 5</option>
+                        </select>
+                    </div>
+
+
+                    <!-- PRODUCT LINK -->
+                    <div class="field-label">
+                        <span>Ссылка на товар</span>
+                    </div>
+
+                    <div class="field-value product-link-value">
+
+                        <input type="text" name="product-link" id="product-link"
+                            value="www.wildberries.ru/seller/123456789/dualshock4">
+                        <button type="button" class="link-btn" id="product-link-btn" title="Перейти к товару">
+                            ↗
+                        </button>
+                        <button type="button" class="link-btn" title="Очистить поле">&#x2715</button>
+
+                    </div>
+
+
+                    <!-- PRICE -->
+                    <div class="field-label">
+                        <span>Цена</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="text" name="price" id="price" value="1234567">
+                    </div>
+
+
+                    <!-- PURCHASE DATE -->
+                    <div class="field-label">
+                        <span>Дата закупки</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Претензия -->
+
+        <section class="details-section">
+            <div class="store-details">
+                <h2 class="section-title">ПРЕТЕНЗИЯ</h2>
+                <div class="case-grid case-grid-2">
+
+                    <div class="field-label">
+                        <span>Отправка претензии (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Арбитраж -->
+
+        <section class="details-section">
+            <div class="store-details">
+                <h2 class="section-title">АРБИТРАЖ</h2>
+                <div class="case-grid case-grid-2">
+                    <div class="field-label">
+                        <span>Иск подан (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                    <div class="field-label">
+                        <span>Решение получено (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Апелляция -->
+
+        <section class="details-section">
+            <h2 class="section-title">АПЕЛЛЯЦИЯ</h2>
+            <div class="case-section">
+                <div class="case-grid case-grid-2">
+                    <div class="field-label">
+                        <span>Иск подан (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                    <div class="field-label">
+                        <span>Решение получено (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Исполнительное производство -->
+
+        <section class="details-section">
+            <div class="store-details">
+                <h2 class="section-title">ИСПОЛНИТЕЛЬНОЕ ПРОИЗВОДСТВО</h2>
+                <div class="case-grid case-grid-2">
+
+                    <div class="field-label">
+                        <span>Исполнительное производство (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="details-section">
+            <div class="store-details">
+                <h2 class="section-title">ЗАВЕРШЕНИЕ ДЕЛА</h2>
+                <div class="case-grid case-grid-4">
+
+                    <div class="field-label">
+                        <span>Завершено (статус)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <select name="case-status">
+                            <option value="settlement">
+                                Мировое соглашение
+                            </option>
+
+                            <option value="court">
+                                Решение суда
+                            </option>
+
+                            <option value="withdrawn">
+                                Иск отозван
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="field-label">
+                        <span>Завершено (дата)</span>
+                    </div>
+
+                    <div class="field-value">
+                        <input type="date">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="details-secction">
+            <div class="details-btn-container">
+                <button type="button">Удалить кейс</button>
+                <button type="button">Перезапустить кейс</button>
+                <button type="button">Сохранить</button>
+            </div>
+        </section>
+
+    </form>
+
+    <section class="details-secction save-btn-out">
+        <div class="save-btn-container">
+            <button type="button">Сохранить</button>
+        </div>
+    </section>
+
+</div>
