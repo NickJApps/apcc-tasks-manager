@@ -550,7 +550,7 @@
 
         font-size: 11px;
         font-weight: 500;
-        
+
         text-transform: uppercase;
     }
 
@@ -615,6 +615,7 @@
     background: transparent;
     font-size: 14px;
     text-align: right;
+    font-family: $montserratFontFanily;
 }
 
 /* =====================
@@ -681,16 +682,13 @@
 .platform-value select {
     width: 100%;
     height: 55px;
-
     border: none;
     outline: none;
-
     background-color: transparent;
-
     font-size: 14px;
     text-align: right;
-
     padding-right: 15px;
+    font-family: $montserratFontFanily;
 }
 
 
@@ -990,17 +988,21 @@ Media
         display: flex;
         border: 1px solid #00000017;
         justify-content: center;
+        border: 1px solid $tableBorderColor;
 
         span {
-            font-family: "Roboto";
-            font-weight: 400;
-            font-size: 14px;
+            font-family: $montserratFontFanily;
+            font-weight: 500;
+            font-size: 12px;
             color: #000000;
+            text-transform: uppercase;
         }
 
         .history-created-btn {
             margin-right: 10px;
+            font-family: $montserratFontFanily;
         }
+
     }
 
     .active,
@@ -1009,10 +1011,9 @@ Media
     }
 
     .panel {
-        padding: 0 18px;
-        display: none;
         background-color: white;
         overflow: hidden;
+        display: none;
     }
 
 }
@@ -1028,3 +1029,75 @@ Media
 .invisible {
     display: none;
 }
+
+/*==========================
+    HISTORY CONTAINER
+===========================*/
+.history-section {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.history-section .section-title {
+    text-align: center;
+    margin-bottom: 110px;
+}
+
+.history-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.1fr 1.5fr 1.25fr;
+    border-top: 1px solid #222;
+    border-left: 1px solid #222;
+}
+
+.history-label,
+.history-value,
+.history-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 6px;
+    border-right: 1px solid #222;
+    border-bottom: 1px solid #222;
+    font-size: clamp(13px, 0.7vw, 34px);
+    text-align: center;
+    font-family: $montserratFontFanily;
+}
+
+.history-label {
+    color: #fff;
+    font-family: $montserratFontFanily;
+    font-family: "Montserrat", serif;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.history-label {
+    background-color: $tableBackgroudColor;
+}
+
+.history-value {
+    background-color: #fff;
+}
+
+.history-link {
+    grid-column: span 3;
+    justify-content: flex-end;
+    gap: 16px;
+}
+
+.history-link span {
+    overflow-wrap: anywhere;
+}
+
+/*
+.history-link-btn {
+    flex: 0 0 auto;
+    border: 0;
+    background: transparent;
+    font-size: 40px;
+    cursor: pointer;
+}
+*/

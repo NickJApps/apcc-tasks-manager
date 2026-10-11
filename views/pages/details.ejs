@@ -147,8 +147,9 @@
 
                     <div class="field-value store-link-value">
                         <input type="text" name="link-store" id="link-store">
-                        <button type="button" class="link-btn" id="store-link-btn" title="Перейти в магазин">↗</button>
-                        <button type="button" class="link-btn" title="Очистить поле">&#x2715</button>
+                        <button type="button" class="link-btn" id="open-store-btn" title="Перейти в магазин">↗</button>
+                        <button type="button" class="link-btn" id="clear-store-btn"
+                            title="Очистить поле">&#x2715</button>
                     </div>
 
 
@@ -222,8 +223,9 @@
                         <div class="field-value product-link-value">
 
                             <input type="text" name="product_link" id="product-link">
-                            <button type="button" class="link-btn open-link-btn" title="Перейти к товару">↗</button>
-                            <button type="button" class="link-btn clear-field-btn" title="Очистить поле">&#x2715</button>
+                            <button type="button" class="link-btn open-product-btn" title="Перейти к товару">↗</button>
+                            <button type="button" class="link-btn clear-product-btn"
+                                title="Очистить поле">&#x2715</button>
 
                         </div>
 
@@ -251,10 +253,10 @@
                 </div>
             </div>
             <div class="product-control">
-                <button type="button" id="add-product-btn" class="add-product-btn" title="Добавить товар"> &plus;
+                <button type="button" id="add-product-btn" class="add-product-btn" title="Добавить товар">
+                    &plus;</button>
+                <button type="button" id="delete-product-btn" class="delete-product-btn" title="Удалить товар">&minus;
                 </button>
-                <button type="button" id="delete-product-btn" class="delete-product-btn" title="Удалить товар">
-                    &minus; </button>
             </div>
 
         </section>
@@ -297,7 +299,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="lawsuit-decision-date" type="date">
                     </div>
                 </div>
             </div>
@@ -314,7 +316,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="appeal-date" type="date">
                     </div>
 
                     <div class="field-label">
@@ -322,7 +324,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="appeal_decision_date" type="date">
                     </div>
                 </div>
             </div>
@@ -340,7 +342,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="execution-date" type="date">
                     </div>
 
                 </div>
@@ -353,32 +355,29 @@
                 <div class="case-grid case-grid-4">
 
                     <div class="field-label">
-                        <span>Завершено (статус)</span>
+                        <span>Кейс завершен (статус)</span>
                     </div>
 
                     <div class="field-value">
-                        <select name="case-status">
-                            <option value="settlement">
-                                Мировое соглашение
-                            </option>
-
-                            <option value="court">
-                                Решение суда
-                            </option>
-
-                            <option value="withdrawn">
-                                Иск отозван
-                            </option>
+                        <select id="status-to-date" name="case-status">
+                            <option value=""></option>
+                            <option value="settlement">Мировое соглашение</option>
+                            <option value="withdrawal_of_claim">Отказ от иска</option>
+                            <option value="cease_traiding">Покинул рынок</option>
+                            <option value="suspended">Приостановлено</option>
+                            <option value="executed">Исполнено</option>
+                            <option value="original">Оригинал</option>
+                            <option value="execution_not_possible">Исполнение не возможно</option>
                         </select>
                     </div>
 
 
                     <div class="field-label">
-                        <span>Завершено (дата)</span>
+                        <span>Дата</span>
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="case-complete-date" type="date">
                     </div>
 
                 </div>
@@ -402,9 +401,9 @@
         </div>
     </section>
 
-    <!-- History block -->
-
-    <div class="history-container invisible">
+    <!-- History block  invisible-->
+     
+    <div class="history-container">
         <h2 class="page-title">История</h2>
 
         <div class="history-case pattern">
@@ -420,57 +419,37 @@
             </button>
             <div class="panel">
                 <div class="formbold-mb-5">
+                    <div class="history-grid">
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Дата создания: </label>
-                        <label class="h-creation-date"></label>
-                    </div>
+                        <div class="history-label">Дата создания</div>
+                        <div class="history-value">12.12.2025</div>
+                        <div class="history-label">Дата завершения</div>
+                        <div class="history-value">12.12.2025</div>
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Последний статус: </label>
-                        <label id="h-last-status"></label>
-                    </div>
+                        <div class="history-label">Последнее действие</div>
+                        <div class="history-value">Арбитраж</div>
+                        <div class="history-label">Дата последнего действия</div>
+                        <div class="history-value">12.12.2025</div>
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Последнее действие: </label>
-                        <label id="h-last-action"></label>
-                    </div>
-
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Дата последнего действие: </label>
-                        <label id="h-last-action-date"></label>
-                    </div>
-
-                    <div class="w-full detales-point history-point-margin">
-                        <div class="flex formbold--mx-3">
-                            <div class="w-full formbold-px-3">
-                                <div class="datales-link-container">
-                                    <label for="">Ссылка на магазин:</label>
-                                    <input id="h-link-store" type="text" class="formbold-form-input" />
-                                    <button id="open-link-store" type="button"><img src="../images/show-link-icon.svg"
-                                            alt=""></button>
-                                </div>
-                            </div>
+                        <div class="history-label">Ссылка на магазин</div>
+                        <div class="history-link">
+                            <span>www.wildberries.ru/seller/123456789/dualshock4</span>
+                            <button type="button" class="link-btn" title="Перейти к товару">↗</button>
                         </div>
-                    </div>
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Продукты: </label>
-                        <label id="h-products"></label>
-                    </div>
+                        <div class="history-label">Ссылка на товар</div>
+                        <div class="history-link">
+                            <span>www.wildberries.ru/seller/123456789/dualshock4</span>
+                            <button type="button" class="link-btn open-product-btn" title="Перейти к товару">↗</button>
+                        </div>
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Завершен со статусом: </label>
-                        <label id="h-complete-status"></label>
-                    </div>
+                        <div class="history-label">Статус завершения</div>
+                        <div class="history-value">Мировое соглашение</div>
+                        <div class="history-label">Дата завершения</div>
+                        <div class="history-value">12.02.2026</div>
 
-                    <div class="w-full detales-point history-point-margin">
-                        <label for="date"> Дата завершения: </label>
-                        <label class="h-case-complete-date"></label>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>

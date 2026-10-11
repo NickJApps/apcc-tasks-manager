@@ -75,7 +75,7 @@ async function loadTaskDetails(itn) {
                     item.find("input, select").prop("disabled", true);
                     item.find(".delete-product-btn").addClass("invisible");
 
-                    item.find(".clear-field-btn").addClass("invisible");
+                    item.find(".clear-product-btn").addClass("invisible");
 
                 } else {
                     item.addClass("removable");
@@ -139,9 +139,9 @@ async function loadTaskDetails(itn) {
 
                 const item = pattern.clone().removeClass("pattern");
                 item.find('[class="h-creation-date"]').text(formatDate(history.h_creation_date));
-                item.find('[id="h-last-status"]').text(history.h_last_status);
-                item.find('[id="h-last-action"]').text(history.h_last_action);
-                item.find('[id="h-last-action-date"]').text(formatDate(history.h_last_action_date));
+                item.find('[class="h-last-status"]').text(history.h_last_status);
+                item.find('[class="h-last-action"]').text(history.h_last_action);
+                item.find('[class="h-last-action-date"]').text(formatDate(history.h_last_action_date));
                 item.find('[id="h-products"]').text(history.h_products);
                 item.find('[id="h-link-store"]').val(history.h_link_store);
                 item.find('[id="h-complete-status"]').text(history.h_complete_status);
@@ -217,4 +217,66 @@ $(document).on("click", ".delete-product-btn", function () {
     if ($items.length > 0) {
         $items.last().remove();
     }
+});
+
+/*================================
+ ОЧИСТИТЬ ПОЛЯ ПЕРЕЙТИ ПО ССЫЛКАМ
+=================================*/
+
+// Очистить поле store link
+$(document).on("click", "#clear-store-btn", function(){
+    $('input[id="link-store"]').val('');
+});
+
+// Открыть ссылку на store в новой вкладке
+$(document).on("click", "#open-store-btn", function () {
+    const link = $("#link-store").val();
+    if (!link) {
+        alert("Ссылка не указана");
+        return;
+    }
+    window.open(link, "_blank");
+});
+
+// Очистить поле ссылки конкретного товара
+$(document).on("click", ".clear-product-btn", function () {
+
+    const $item = $(this).closest(".test-purchase-item");
+    $item.find("#product-link").val("");
+});
+
+// Открыть ссылку на товар в новой вкладке
+$(document).on("click", ".link-btn.open-product-btn", function () {
+    console.log('click')
+
+    const $item = $(this).closest(".test-purchase-item");
+    const link = $item.find("#product-link").val().trim();
+
+    if (!link) {
+        alert("Ссылка на товар не указана");
+        return;
+    }
+
+    window.open(link, "_blank");
+});
+
+
+/*=============================
+        HISTORY BLOCK
+==============================*/
+
+// Блок history accordion
+
+$(document).on("click", ".accordion", function () {
+
+    let panel = $(this).next(".panel");
+
+    // закрыть все кроме текущего
+    $(".panel").not(panel).slideUp();
+    $(".accordion").not(this).removeClass("active");
+
+    // переключить текущий
+    $(this).toggleClass("active");
+    panel.slideToggle();
+
 });
