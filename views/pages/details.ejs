@@ -14,43 +14,43 @@
 
             <div class="progress-line active"></div>
 
-            <div class="progress-step">
+            <div class="progress-step" id="purchase-step-circle">
                 <div class="step-circle">2</div>
                 <span>Закупка</span>
             </div>
 
-            <div class="progress-line"></div>
+            <div class="progress-line" id="purchase-step-line"></div>
 
-            <div class="progress-step">
+            <div class="progress-step" id="letter-step-circle">
                 <div class="step-circle">3</div>
                 <span>Претензия</span>
             </div>
 
-            <div class="progress-line"></div>
+            <div class="progress-line" id="letter-step-line"></div>
 
-            <div class="progress-step">
+            <div class="progress-step" id="lawsuit-step-circle">
                 <div class="step-circle">4</div>
                 <span>Арбитраж</span>
             </div>
 
-            <div class="progress-line"></div>
+            <div class="progress-line" id="lawsuit-step-line"></div>
 
             <div class="progress-step">
-                <div class="step-circle">5</div>
+                <div class="step-circle" id="appeal-step-circle">5</div>
                 <span>Апелляция</span>
             </div>
 
-            <div class="progress-line"></div>
+            <div class="progress-line" id="appeal-step-line"></div>
 
             <div class="progress-step">
-                <div class="step-circle">6</div>
+                <div class="step-circle" id="execution-step-circle">6</div>
                 <span>Исполнительное</span>
             </div>
         </div>
 
     </section>
 
-    <form id="details-form">
+    <form id="detales-form" data-itn="<%= itn %>">
         <!-- Общая информация о селлере -->
         <section class="details-section">
 
@@ -61,13 +61,13 @@
                 <!-- Дата создания -->
                 <div class="created-date">
                     <span>Дата создания</span>
-                    <label>12.12.2026</label>
+                    <label id="creation-date">12.12.2026</label>
                 </div>
 
                 <!-- Seller -->
                 <span class="field-label seller-label">Имя / Наименование</span>
                 <div class="field-value seller-value">
-                    <label>Епремян Нырок Варданович</label>
+                    <label id="seller-name"></label>
                 </div>
 
                 <!-- ITN -->
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="field-value">
-                    <label>12345678</label>
+                    <label id="itn"></label>
                 </div>
 
                 <!-- PSRN -->
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="field-value">
-                    <label>1234567890</label>
+                    <label id="psrn"></label>
                 </div>
 
                 <!-- Region -->
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="field-value wide-value">
-                    <input type="text" name="region" value="Lorem ipsum dolor sit amet">
+                    <input id="region" type="text" name="region">
                 </div>
 
                 <!-- Address -->
@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="field-value wide-value">
-                    <input type="text" name="address" value="Seller Seller Seller">
+                    <input id="address" type="text" name="address">
                 </div>
 
 
@@ -111,7 +111,7 @@
                 <span class="field-label comment-label">Комментарий</span>
 
                 <div class="field-value comment-value">
-                    <textarea name="comment"></textarea>
+                    <textarea id="comment" name="comment"></textarea>
                 </div>
 
             </div>
@@ -133,9 +133,9 @@
 
                     <div class="field-value platform-value">
                         <select name="platform" id="platform">
-                            <option value="ozon">Ozon</option>
-                            <option value="wildberries">Wildberries</option>
-                            <option value="yandex">Яндекс Маркет</option>
+                            <option value="Ozon">Ozon</option>
+                            <option value="Wildberries">Wildberries</option>
+                            <option value="Yandex">Яндекс Маркет</option>
                         </select>
                     </div>
 
@@ -146,12 +146,9 @@
                     </div>
 
                     <div class="field-value store-link-value">
-                        <input type="text" name="store-link" id="store-link"
-                            value="www.wildberries.ru/seller/123456789">
+                        <input type="text" name="link-store" id="link-store">
                         <button type="button" class="link-btn" id="store-link-btn" title="Перейти в магазин">↗</button>
-
                         <button type="button" class="link-btn" title="Очистить поле">&#x2715</button>
-
                     </div>
 
 
@@ -161,7 +158,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="revenue" id="revenue" value="1234567">
+                        <input type="text" name="monthly-revenue" id="monthly-revenue">
                     </div>
 
 
@@ -171,7 +168,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="sales" id="sales" value="123456">
+                        <input type="text" name="sales-number" id="sales-number">
                     </div>
 
 
@@ -181,7 +178,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="stock" id="stock" value="123456">
+                        <input type="text" name="remaining-stock" id="remaining-stock">
                     </div>
 
                 </div>
@@ -192,78 +189,72 @@
         <!--Информация по закупке-->
 
         <section class="details-section">
-            <div class="store-details">
-
+            <div class="test-purchase-container">
                 <h2 class="section-title">ДЕТАЛИ ПО ТОВАРУ</h2>
 
-                <div class="product-grid">
+                <div class="test-purchase-item template" hidden>
 
-                    <!-- PLATFORM -->
-                    <div class="field-label">
-                        <span>Платформа</span>
+                    <h2 class="purchase-subtitle"></h2>
+
+                    <div class="product-grid">
+
+                        <!-- PRODUCT -->
+                        <div class="field-label">
+                            <span>Продукт</span>
+                        </div>
+
+                        <div class="field-value product-link-value">
+                            <select name="product" id="product">
+                                <option value="0"></option>
+                                <option class="visibility" value="ds4">DualShock</option>
+                                <option class="visibility" value="ds5">DualSence</option>
+                                <option class="visibility" value="dss">DualShock/Sence</option>
+                                <option class="visibility" value="charging">Charging Station</option>
+                            </select>
+                        </div>
+
+
+                        <!-- PRODUCT LINK -->
+                        <div class="field-label">
+                            <span>Ссылка на товар</span>
+                        </div>
+
+                        <div class="field-value product-link-value">
+
+                            <input type="text" name="product_link" id="product-link">
+                            <button type="button" class="link-btn open-link-btn" title="Перейти к товару">↗</button>
+                            <button type="button" class="link-btn clear-field-btn" title="Очистить поле">&#x2715</button>
+
+                        </div>
+
+
+                        <!-- PRICE -->
+                        <div class="field-label">
+                            <span>Цена</span>
+                        </div>
+
+                        <div class="field-value">
+                            <input type="text" name="product_price" id="product-price">
+                        </div>
+
+
+                        <!-- PURCHASE DATE -->
+                        <div class="field-label">
+                            <span>Дата закупки</span>
+                        </div>
+
+                        <div class="field-value">
+                            <input id="item-purchase-date" type="date">
+                        </div>
+
                     </div>
-
-                    <div class="field-value">
-                        <select name="platform" id="platform">
-                            <option value="ozon">Ozon</option>
-                            <option value="wildberries">Wildberries</option>
-                            <option value="yandex">Яндекс Маркет</option>
-                        </select>
-                    </div>
-
-
-                    <!-- PRODUCT -->
-                    <div class="field-label">
-                        <span>Продукт</span>
-                    </div>
-
-                    <div class="field-value">
-                        <select name="product" id="product">
-                            <option value="dualshock4">DualShock 4</option>
-                            <option value="dualshock5">DualSense</option>
-                            <option value="ps5">PlayStation 5</option>
-                        </select>
-                    </div>
-
-
-                    <!-- PRODUCT LINK -->
-                    <div class="field-label">
-                        <span>Ссылка на товар</span>
-                    </div>
-
-                    <div class="field-value product-link-value">
-
-                        <input type="text" name="product-link" id="product-link"
-                            value="www.wildberries.ru/seller/123456789/dualshock4">
-                        <button type="button" class="link-btn" id="product-link-btn" title="Перейти к товару">
-                            ↗
-                        </button>
-                        <button type="button" class="link-btn" title="Очистить поле">&#x2715</button>
-
-                    </div>
-
-
-                    <!-- PRICE -->
-                    <div class="field-label">
-                        <span>Цена</span>
-                    </div>
-
-                    <div class="field-value">
-                        <input type="text" name="price" id="price" value="1234567">
-                    </div>
-
-
-                    <!-- PURCHASE DATE -->
-                    <div class="field-label">
-                        <span>Дата закупки</span>
-                    </div>
-
-                    <div class="field-value">
-                        <input type="date">
-                    </div>
-
                 </div>
-
+            </div>
+            <div class="product-control">
+                <button type="button" id="add-product-btn" class="add-product-btn" title="Добавить товар"> &plus;
+                </button>
+                <button type="button" id="delete-product-btn" class="delete-product-btn" title="Удалить товар">
+                    &minus; </button>
             </div>
 
         </section>
@@ -280,7 +271,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="cd-letter-date" type="date">
                     </div>
 
                 </div>
@@ -298,7 +289,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="date">
+                        <input id="lawsuit-date" type="date">
                     </div>
 
                     <div class="field-label">
@@ -411,4 +402,75 @@
         </div>
     </section>
 
-</div>
+    <!-- History block -->
+
+    <div class="history-container invisible">
+        <h2 class="page-title">История</h2>
+
+        <div class="history-case pattern">
+            <button class="accordion">
+                <div class="history-created-btn">
+                    <span>Создан:</span>
+                    <span class="h-creation-date"></span>
+                </div>
+                <div>
+                    <span>Завершен:</span>
+                    <span class="h-case-complete-date"></span>
+                </div>
+            </button>
+            <div class="panel">
+                <div class="formbold-mb-5">
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Дата создания: </label>
+                        <label class="h-creation-date"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Последний статус: </label>
+                        <label id="h-last-status"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Последнее действие: </label>
+                        <label id="h-last-action"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Дата последнего действие: </label>
+                        <label id="h-last-action-date"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <div class="flex formbold--mx-3">
+                            <div class="w-full formbold-px-3">
+                                <div class="datales-link-container">
+                                    <label for="">Ссылка на магазин:</label>
+                                    <input id="h-link-store" type="text" class="formbold-form-input" />
+                                    <button id="open-link-store" type="button"><img src="../images/show-link-icon.svg"
+                                            alt=""></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Продукты: </label>
+                        <label id="h-products"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Завершен со статусом: </label>
+                        <label id="h-complete-status"></label>
+                    </div>
+
+                    <div class="w-full detales-point history-point-margin">
+                        <label for="date"> Дата завершения: </label>
+                        <label class="h-case-complete-date"></label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>

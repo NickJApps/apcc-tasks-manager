@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
         getAllCasesInProgress();
     }, 30000);
-    
+
 });
 
 async function getAllCasesInProgress() {
@@ -321,6 +321,17 @@ function formatDate(dateStr) {
         const [year, month, day] = dateStr.split("-");
         return `${day}.${month}.${year}`;
     }
+}
+
+
+/*===============================
+    SELLER DETAILS PAGE
+================================*/
+
+// load details page
+
+function loadDetailsPage(itn) {
+    window.location.href = `/details/${encodeURIComponent(itn)}`;
 }
 
 

@@ -11,4 +11,7 @@ export class Service {
         return await this.repo.getAllInProgress();
     }
 
+    async getSellerDetailsByItn(itn) {
+        return await this.repo.getSellerDetailsByItn(itn);
+    }
 }
