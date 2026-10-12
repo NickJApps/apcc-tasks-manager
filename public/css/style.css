@@ -328,6 +328,7 @@
   margin-bottom: 0;
 }
 
+/*====================================================*/
 .responsive-table tbody tr:hover {
   background-color: rgb(179, 215, 215);
   cursor: pointer;
@@ -418,6 +419,11 @@
 @media (min-width: 48em) {
   .responsive-table tbody tr:nth-of-type(even) {
     background-color: rgba(167, 163, 163, 0.12);
+  }
+  .responsive-table tbody tr:hover,
+  .responsive-table tbody tr:nth-of-type(even):hover {
+    background-color: rgb(179, 215, 215);
+    cursor: pointer;
   }
 }
 @media (min-width: 30em) {
@@ -1005,9 +1011,8 @@ Media
   color: #000000;
   text-transform: uppercase;
 }
-.history-container .accordion .history-created-btn {
-  margin-right: 10px;
-  font-family: "Montserrat", serif;
+.history-container .accordion div:nth-last-of-type(1) {
+  margin-left: 10px;
 }
 .history-container .active,
 .history-container .accordion:hover {

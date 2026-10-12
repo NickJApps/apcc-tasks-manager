@@ -278,5 +278,180 @@ $(document).on("click", ".accordion", function () {
     // переключить текущий
     $(this).toggleClass("active");
     panel.slideToggle();
+});
+
+
+
+// **************************************************
+
+/*======================================== 
+ Сохранить изменения detales в базу данных
+=========================================*/
+
+$(document).on("submit", "#detales-form", async function (e) {
+    e.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(this));
+    delete formData.product;
+    delete formData.product_price;
+    delete formData.product_link;
+
+    let products = [];
+
+    const completeDate = $('#case-complete-date').val();
+    const status = $('#status-to-date').val();
+
+    if (completeDate && !status) {
+        alert("Выберете статус завершения кейса");
+        return;
+    }
+
+    if (status && !completeDate) {
+        alert("Установите дату завершения кейса");
+        return;
+    }
+
+    $('.detales-purchase-container .detales-purchase-item').each(function () {
+
+        const product = $(this).find('[name="product"]').val();
+        const price = $(this).find('[name="product_price"]').val();
+        const link = $(this).find('[name="product_link"]').val();
+        const item_purchase_date = $(this).find('[name="item_purchase_date"]').val();
+
+        if (product && product !== "0") {
+            products.push({
+                product,
+                product_price: Number(price),
+                product_link: link,
+                item_purchase_date
+            });
+        }
+    });
+
+    /*
+        if (!products.length) {
+            alert('Добавьте хотя бы один корректный продукт');
+            return;
+        }
+    */
+
+    formData.test_purchase_date = getLatestDate(products);
+    formData.test_purchases = products;
+    formData.status_to_date = putCaseStatus(formData);
+
+    if (COMPLETION_STATUS.has(formData.status_to_date)) {
+        formData.case_in_progress = false;
+    }
+
+    const itn = $(this).data("itn");
+
+    const response = await fetch(`/task/update/${itn}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+    console.log("Updated:", result);
+
+    alert("Изменения сохранены!");
+
+    // ⬇ после закрытия alert — загрузить основную страницу
+    loader.loadPage("./pages/main.html").then(html => {
+        $(".main-content").html(html);
+
+        // сброс выделения
+        $("nav .nav-item").removeClass("active");
+
+        // выделяем "Текущее"
+        $('a[data-page="main"]').addClass("active");
+
+        getAllCasesInProgress();
+    });
 
 });
+
+// получить последнюю дату для записи в переменную test_purchase_date
+function getLatestDate(products) {
+    if (!products?.length) return null;
+
+    return products.reduce((latest, item) => {
+        if (!item.item_purchase_date) return latest;
+
+        return (!latest || item.item_purchase_date > latest)
+            ? item.item_purchase_date
+            : latest;
+
+    }, null);
+}
+
+// установить текущий статус  
+
+function putCaseStatus(obj) {
+    // 1. Если есть ручной статус — используем его
+    if (obj.status_to_date && MANUAL_STATUSES.has(obj.status_to_date)) {
+        return obj.status_to_date;
+    }
+
+    // 2. Проверяем автоматические статусы (с конца — самый приоритетный)
+    if (obj.execution_date) {
+        return "execution";
+    }
+
+    if (obj.appeal_date || obj.appeal_decision_date) {
+        return "appeal";
+    }
+
+    if (obj.lawsuit_date || obj.lawsuit_decision_date) {
+        return "lawsuit";
+    }
+
+    if (obj.cd_letter_date) {
+        return "letter";
+    }
+
+    if (obj.test_purchase_date) {
+        return "purchase";
+    }
+
+    // 3. Если ничего нет — начальный статус
+    return "target";
+}
+
+// СТАТУС ЗАВЕРШЕНИЯ
+
+const COMPLETION_STATUS = new Set([
+    "settlement",
+    "withdrawal_of_claim",
+    "cease_traiding",
+    "executed",
+    "original",
+    "execution_not_possible"
+]);
+
+// MANUAL STATUS TYPE
+const MANUAL_STATUSES = new Set([
+    "settlement",
+    "withdrawal_of_claim",
+    "cease_traiding",
+    "suspended",
+    "executed",
+    "original",
+    "execution_not_possible"
+]);
+
+// СТАТУС ЗАВЕРШЕНИЯ ДЛЯ ИСТОРИИ
+
+function HISTORY_TRANSLATE_STATUS(status) {
+
+    const map = {
+        settlement: "Мировое соглашение",
+        withdrawal_of_claim: "Отказ от иска",
+        cease_traiding: "Покинул рынок",
+        executed: "Исполнено",
+        original: "Оригинал",
+        execution_not_possible: "Исполнение не возможно"
+    };
+
+    return map[status];
+}
