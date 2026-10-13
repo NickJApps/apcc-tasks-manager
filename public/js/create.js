@@ -41,13 +41,13 @@ $(document).on("submit", "#create-target", async function (e) {
 
     // 1. Проверка ИНН
     if (!formData.itn || !itnCheck(formData.itn)) {
-        showError($("#itn"), "Поле ИНН пустое или неверное");
+        alert($("#itn"), "Поле ИНН пустое или неверное");
         return;
     }
 
     // 2. Проверка ОГРН
     if (!formData.psrn || !psrnCheck(formData.psrn)) {
-        showError($("#psrn"), "Поле ОГРН пустое или неверное");
+        alert($("#psrn"), "Поле ОГРН пустое или неверное");
         return;
     }
 
@@ -55,7 +55,7 @@ $(document).on("submit", "#create-target", async function (e) {
     const checkResponse = await fetch(`/task/byitn/${formData.itn}`);
 
     if (checkResponse.status === 200) {
-        showError($("#itn"), "Такой ИНН уже существует");
+        alert($("#itn"), "Такой ИНН уже существует");
         return;
     }
 
@@ -128,7 +128,18 @@ function psrnCheck(psrn) {
     return false;
 }
 
-// Загрузить данные по селлеру
+// Получить текущую дату 
+
+function getLocalDate() {
+    const today = new Date();
+    return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+        .toISOString()
+        .split('T')[0];
+}
+
+/*=====================================
+    ЗАГРУЗИТЬ ДАННЫЕ ПО СЕЛЛЕРУ
+======================================*/
 
 $(document).on('click', '#check-btn', async function () {
 
@@ -166,4 +177,81 @@ $(document).on('click', '#check-btn', async function () {
         console.error(error);
         alert(error.message);
     }
+});
+
+/*======================================
+    ДОБАВИТЬ И УДАЛИТЬ ТОВАРЫ 
+=======================================*/
+
+// Добавить товар в закупку 
+
+$(document).on("click", ".add-product-btn", function () {
+    const $container = $(".test-purchase-container");
+    const $template = $container.find(".test-purchase-item.template");
+
+    const $clone = $template
+        .clone(false)
+        .removeClass("template")
+        .addClass("pattern removable")
+        .prop("hidden", false);
+
+    $clone.find("input").val("").prop("disabled", false);
+    $clone.find("select").prop("selectedIndex", 0).prop("disabled", false);
+
+    const purchaseIndex = $container.find(".test-purchase-item").length + 1;
+    
+    $clone.find(".purchase-subtitle").text(`Товар № ${purchaseIndex}`);
+    $container.append($clone);
+});
+
+// Удалить товар из закупки
+
+$(document).on("click", ".delete-product-btn", function () {
+    const $container = $(".test-purchase-container");
+    const $items = $container.find(".test-purchase-item.removable");
+
+    if ($items.length > 0) {
+        $items.last().remove();
+    }
+});
+
+/*================================
+ ОЧИСТИТЬ ПОЛЯ ПЕРЕЙТИ ПО ССЫЛКАМ
+=================================*/
+
+// Очистить поле store link
+$(document).on("click", "#clear-store-btn", function(){
+    $('input[id="link-store"]').val('');
+});
+
+// Открыть ссылку на store в новой вкладке
+$(document).on("click", "#open-store-btn", function () {
+    const link = $("#link-store").val();
+    if (!link) {
+        alert("Ссылка не указана");
+        return;
+    }
+    window.open(link, "_blank");
+});
+
+// Очистить поле ссылки конкретного товара
+$(document).on("click", ".clear-product-btn", function () {
+
+    const $item = $(this).closest(".test-purchase-item");
+    $item.find("#product-link").val("");
+});
+
+// Открыть ссылку на товар в новой вкладке
+$(document).on("click", ".link-btn.open-product-btn", function () {
+    console.log('click')
+
+    const $item = $(this).closest(".test-purchase-item");
+    const link = $item.find("#product-link").val().trim();
+
+    if (!link) {
+        alert("Ссылка на товар не указана");
+        return;
+    }
+
+    window.open(link, "_blank");
 });

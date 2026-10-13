@@ -328,7 +328,6 @@
   margin-bottom: 0;
 }
 
-/*====================================================*/
 .responsive-table tbody tr:hover {
   background-color: rgb(179, 215, 215);
   cursor: pointer;
@@ -588,6 +587,19 @@
   background: transparent;
   line-height: 1;
   cursor: pointer;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  -webkit-transition: -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+  transition: -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s, -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+}
+
+.link-btn:active {
+  -webkit-transform: translateY(1px);
+          transform: translateY(1px);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .field-value select {
@@ -752,6 +764,19 @@
   font-size: 17px;
   line-height: 1;
   cursor: pointer;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  -webkit-transition: -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+  transition: -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s;
+  transition: transform 0.1s, box-shadow 0.1s, -webkit-transform 0.1s, -webkit-box-shadow 0.1s;
+}
+
+.product-control button:active {
+  -webkit-transform: translateY(1px);
+          transform: translateY(1px);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .product-select {
@@ -790,15 +815,19 @@
 .create-btn-container button {
   width: 40%;
   height: 30px;
-  color: #fff;
+  color: #011701;
+  font-family: "Montserrat";
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .create-btn-container .get-seller-info-btn {
-  background-color: #005af0;
+  background-color: #ebedf0;
 }
 
 .create-btn-container .save-seller-button {
-  background-color: #258034;
+  background-color: #d8e4da;
 }
 
 .create-btn-container button:hover {
@@ -1108,12 +1137,53 @@ Media
   overflow-wrap: anywhere;
 }
 
-/*
-.history-link-btn {
-    flex: 0 0 auto;
-    border: 0;
-    background: transparent;
-    font-size: 40px;
-    cursor: pointer;
+/*=============================
+    PRODUCT CREATE PAGE
+==============================*/
+.purchase-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1.4fr 0.9fr 1.2fr;
+  grid-template-columns: 1fr 1.4fr 0.9fr 1.2fr;
+  grid-auto-rows: 30px;
 }
-*/
+
+.purchase-grid > label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #e5e0e0;
+  border: 1px solid #000;
+}
+
+.product-link-wrapper {
+  grid-column: 2/-1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 0;
+  border: 1px solid #000;
+}
+
+.select-wrapper {
+  padding: 0 20px;
+  border: 1px solid;
+}
+
+.select-wrapper select {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  text-align: right;
+  padding-right: 15px;
+  font-family: "Montserrat", serif;
+}
