@@ -23,8 +23,14 @@ $(document).on("submit", "#create-target", async function (e) {
         }
     });
 
+    //Проверить имя на пустое поле 
+    if(!formData.seller_name){
+        showQuestion("Введите имя селлера");
+        return;
+    }
+
     if (!products.length) {
-        alert('Добавьте хотя бы один корректный продукт');
+        showWarning("Добавьте хотя бы один продукт в закупку");
         return;
     }
 
@@ -40,14 +46,16 @@ $(document).on("submit", "#create-target", async function (e) {
     }
 
     // 1. Проверка ИНН
+
     if (!formData.itn || !itnCheck(formData.itn)) {
-        alert($("#itn"), "Поле ИНН пустое или неверное");
+        showWarning("Поле ИНН пустое или неверное");
         return;
     }
 
+
     // 2. Проверка ОГРН
     if (!formData.psrn || !psrnCheck(formData.psrn)) {
-        alert($("#psrn"), "Поле ОГРН пустое или неверное");
+        showWarning("Поле ОГРН пустое или неверное");
         return;
     }
 
@@ -55,36 +63,37 @@ $(document).on("submit", "#create-target", async function (e) {
     const checkResponse = await fetch(`/task/byitn/${formData.itn}`);
 
     if (checkResponse.status === 200) {
-        alert($("#itn"), "Такой ИНН уже существует");
+        showError("Такой ИНН уже существует");
         return;
     }
 
     formData.control = formData.control === 'on';
 
     //сохранить в базе
-    const response = await fetch("/task/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-    });
+    try {
+        //сохранить в базе
+        const response = await fetch("/task/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
 
-    const result = await response.json();
-    console.log(result);
-    alert("Task created!");
+        const result = await response.json();
 
+        if (!response.ok) {
+            throw new Error(result.message || "Не удалось создать задачу");
+        }
 
-    // ⬇ после закрытия alert — загрузить основную страницу
-    loader.loadPage("./pages/main.html").then(html => {
-        $(".main-content").html(html);
+        await showSuccess("Задача успешно создана!");
 
-        // сброс выделения
-        $(".nav-item").removeClass("active");
+        // Переходим на страницу списка задач
+        window.location.href = "/";
 
-        // выделяем "Текущее"
-        $('a[data-page="main"]').addClass("active");
+    } catch (error) {
+        console.error("Ошибка создания задачи:", error);
+        showError("Ошибка при создании задачи");
+    }
 
-        getAllCasesInProgress();
-    });
 });
 
 // проверить валидность инн
@@ -149,7 +158,7 @@ $(document).on('click', '#check-btn', async function () {
     const ident = itn || psrn;
 
     if (!ident) {
-        alert("Введите ИНН или ОГРН/ОГРНИП");
+        showQuestion("Введите ИНН или ОГРН/ОГРНИП");
         return;
     }
 
@@ -165,8 +174,6 @@ $(document).on('click', '#check-btn', async function () {
             throw new Error(result.message);
         }
 
-        console.log(result);
-
         $('#seller_name').val(result.name);
         $('#itn').val(result.itn);
         $('#region').val(result.region_address);
@@ -175,7 +182,7 @@ $(document).on('click', '#check-btn', async function () {
     } catch (error) {
 
         console.error(error);
-        alert(error.message);
+        showError("Ошибка сохранения")
     }
 });
 
@@ -199,7 +206,7 @@ $(document).on("click", ".add-product-btn", function () {
     $clone.find("select").prop("selectedIndex", 0).prop("disabled", false);
 
     const purchaseIndex = $container.find(".test-purchase-item").length + 1;
-    
+
     $clone.find(".purchase-subtitle").text(`Товар № ${purchaseIndex}`);
     $container.append($clone);
 });
@@ -220,7 +227,7 @@ $(document).on("click", ".delete-product-btn", function () {
 =================================*/
 
 // Очистить поле store link
-$(document).on("click", "#clear-store-btn", function(){
+$(document).on("click", "#clear-store-btn", function () {
     $('input[id="link-store"]').val('');
 });
 
@@ -228,7 +235,7 @@ $(document).on("click", "#clear-store-btn", function(){
 $(document).on("click", "#open-store-btn", function () {
     const link = $("#link-store").val();
     if (!link) {
-        alert("Ссылка не указана");
+        showQuestion("Ссылка не указана");
         return;
     }
     window.open(link, "_blank");
@@ -243,13 +250,12 @@ $(document).on("click", ".clear-product-btn", function () {
 
 // Открыть ссылку на товар в новой вкладке
 $(document).on("click", ".link-btn.open-product-btn", function () {
-    console.log('click')
 
     const $item = $(this).closest(".test-purchase-item");
     const link = $item.find("#product-link").val().trim();
 
     if (!link) {
-        alert("Ссылка на товар не указана");
+        showQuestion("Ссылка на товар не указана");
         return;
     }
 

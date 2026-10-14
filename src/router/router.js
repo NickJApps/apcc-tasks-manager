@@ -6,10 +6,11 @@ const router = express.Router();
 router.get("/", controller.home);
 router.get("/create", controller.create);
 router.get("/details", controller.details);
+
 router.get("/details/:itn", controller.details);
-
-
 router.get("/progress", controller.getProgress);
+
 router.get("/task/byitn/:itn", controller.getSellerDetailsByItn);
+router.post("/task/create", controller.createTarget);
 
 export default router;

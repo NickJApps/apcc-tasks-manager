@@ -32,4 +32,22 @@ export const getProgress = async (req, res) => {
     res.json(targets);
 };
 
+export const createTarget = async (req, res) => {
+    try {
+        const result = await service.createTarget(req.body);
+
+        res.status(201).json({
+            success: true,
+            message: "Задача успешно создана",
+            id: result.insertedId
+        });
+    } catch (error) {
+        console.error("Ошибка создания задачи:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Не удалось создать задачу"
+        });
+    }
+};
 

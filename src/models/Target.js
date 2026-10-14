@@ -1,6 +1,9 @@
 export default class Target {
 
     constructor(data) {
+        if (!data || typeof data !== "object") {
+            throw new TypeError("Target requires a data object");
+        }
 
         //seller inform
         this.creation_date = data.creation_date;
@@ -52,7 +55,7 @@ export default class Target {
         this.control = data.control;
 
         //the purchase is completed
-        this.completed = data.comleted;
+        this.completed = data.completed;
 
     }
 

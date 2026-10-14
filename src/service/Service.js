@@ -14,4 +14,9 @@ export class Service {
     async getSellerDetailsByItn(itn) {
         return await this.repo.getSellerDetailsByItn(itn);
     }
+
+    async createTarget(data) {
+        const target = new Target(data);
+        return await this.repo.createTarget(target);
+    }
 }
