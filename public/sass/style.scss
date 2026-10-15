@@ -125,18 +125,70 @@
     .comment-mark-item {
         display: flex;
         align-items: center;
-
-        img {
-            width: 16px;
-            height: 16px;
-            margin: 0 2px 0 2px;
-        }
+        margin: 2px 0 2px 0;
     }
 
     .comment-mark-item p:nth-of-type(2) {
         font-weight: $fontSemiBold;
     }
 
+}
+
+/*=====================
+    MAIN PAGE SEARCH 
+======================*/
+/*Mark Images*/
+.control-mark {
+    font-size: 10px;
+    color: rgb(186, 34, 34);
+    text-align: center;
+    font-weight: 900;
+    border: 2px solid;
+    border-radius: 50%;
+    padding: 2px 7px 2px 7px;
+}
+
+.completed-mark {
+    font-size: 9px;
+    color: rgb(38, 171, 49);
+    text-align: center;
+    font-weight: 900;
+    border: 2px solid;
+    border-radius: 50%;
+    padding: 2px 5px 2px 6px;
+}
+
+.mark-margin {
+    margin: 0 4px 0 4px;
+}
+
+/* Search */
+.search-results {
+    border: 1px solid rgb(204 192 192);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    display: none;
+    width: 100%;
+}
+
+.search-item {
+    padding: 6px;
+    font-family: 'Montserrat';
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.search-item:hover {
+    background: rgb(179, 215, 215);
+    cursor: pointer;
+}
+
+.input-search-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 /*====================
@@ -146,6 +198,12 @@
 
 .container {
     margin: 5% 3%;
+}
+
+td {
+    font-family: $montserratFontFanily;
+    color: #000;
+    font-weight: 500;
 }
 
 .responsive-table thead {
@@ -172,6 +230,10 @@
 
 .td-w22 {
     width: 22%;
+}
+
+.td-w34 {
+    width: 34%;
 }
 
 .invisible {
@@ -246,8 +308,8 @@
     outline: none;
     resize: none;
     border: 1px solid rgb(134, 188, 37);
-    font-family: "Roboto";
-    font-weight: 400;
+    font-family: $montserratFontFanily;
+    font-weight: 500;
     color: #000000;
     font-size: 14px;
 }
@@ -515,8 +577,6 @@
         font-size: 0.72em;
     }
 }
-
-
 
 /*==============================
     OTHER PAGES 
@@ -829,7 +889,8 @@
 .details-btn-container button {
     width: 50%;
     height: 30px;
-    background-color: rgb(105 121 149);;
+    background-color: rgb(105 121 149);
+    ;
     color: #fff;
     text-transform: uppercase;
     font-family: $montserratFontFanily;

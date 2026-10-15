@@ -13,4 +13,11 @@ router.get("/progress", controller.getProgress);
 router.get("/task/byitn/:itn", controller.getSellerDetailsByItn);
 router.post("/task/create", controller.createTarget);
 
+router.get("/search", controller.search);
+
+router.put("/mark/:itn", controller.updateImportant);
+router.put("/completed/:itn", controller.updateCompleted);
+
+router.put("/update/:itn", controller.update);
+
 export default router;

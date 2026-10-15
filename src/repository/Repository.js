@@ -33,4 +33,74 @@ export class Repository {
         await this.connect();
         return await this.collection.insertOne(target);
     }
+
+    // search by name / psrn
+    async search(field, value) {
+        await this.connect();
+
+        const escapedValue = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+        const query = {
+            [field]: {
+                $regex: `^${escapedValue}`,
+                $options: "i"
+            }
+        };
+
+        return await this.collection
+            .find(query)
+            .limit(10)
+            .toArray();
+    }
+
+
+
+    // Пометка для закупки
+    async updateImportant(itn, data) {
+        await this.connect();
+
+        return await this.collection.updateOne(
+            { itn },
+            {
+                $set: {
+                    control: data.control,
+                    completed: false
+                }
+            }
+        );
+    }
+
+    // Ожидание получения
+    async updateCompleted(itn, data) {
+        await this.connect();
+
+        return await this.collection.updateOne(
+            { itn },
+            {
+                $set: {
+                    control: false,
+                    completed: data.completed
+                }
+            }
+        );
+    }
+
+    // Внести изменения в задачу
+    async update(itn, data) {
+        await this.connect();
+
+        const updateData = { ...data };
+
+        // Не изменяем системный идентификатор MongoDB
+        delete updateData._id;
+
+        // ITN используется для поиска задачи
+        delete updateData.itn;
+
+        return await this.collection.updateOne(
+            { itn },
+            { $set: updateData }
+        );
+    }
+
 }

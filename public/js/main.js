@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(() => {
         getAllCasesInProgress();
     }, 30000);
-
+    
 });
 
 async function getAllCasesInProgress() {
@@ -22,7 +22,7 @@ async function getAllCasesInProgress() {
 }
 
 async function renderTargets(targets) {
-   
+
     const tbodyTargets = $("#targets-table");
     const tbodyPurchase = $("#purchase-table");
     const tbodyLetter = $("#letter-table");
@@ -61,16 +61,16 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
-                    <td class="td-w4" data-title="platform" data-type="currency">${t.platform || '--'}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">--</td>
                     <td class="td-w12" data-title="date" data-type="currency">--</td>
                     <td data-title="executant" data-type="currency">${t.executant}</td>
-                    <td class="control-cell" data-title="control" data-type="currency">
-                        ${t.control === true ? '<img src="images/label-important.svg">' : ''}
+                    <td class="control-cell td-important" data-title="control" data-type="currency">
+                        ${t.control === true ? '<span class="control-mark">!</span>' : ''}
                     </td>
                     <td class="completed-cell" data-title="completed" data-type="currency">
-                        ${t.completed === true ? '<img src="images/purchase-check.svg">' : ''}
+                        ${t.completed === true ? '<span class="completed-mark">✔</span>' : ''}
                     </td>
                 </tr>`);
             tbodyTargets.append(tr);
@@ -85,34 +85,37 @@ async function renderTargets(targets) {
                 const newControl = !t.control;
                 const newCompleted = false;
 
-                const response = await fetch(`/task/mark/${t.itn}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        control: newControl,
-                        completed: newCompleted
-                    })
-                });
+                try {
+                    const response = await fetch(`/mark/${encodeURIComponent(t.itn)}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            control: newControl,
+                            completed: newCompleted
+                        })
+                    });
 
-                if (!response.ok) {
-                    alert("Ошибка сохранения");
-                    return;
+                    if (!response.ok) {
+                        throw new Error("Ошибка сохранения");
+                    }
+
+                    // Обновляем состояние только после успешного ответа
+                    t.control = newControl;
+                    t.completed = newCompleted;
+
+                    tr.find(".control-cell").html(
+                        t.control
+                            ? '<span class="control-mark" title="Пометка для закупки">!</span>'
+                            : ""
+                    );
+
+                    tr.find(".completed-cell").html("");
+                } catch (error) {
+                    console.error(error);
+                    showError("Не удалось изменить маркировку");
                 }
-
-                // обновляем объект
-                t.control = newControl;
-                t.completed = newCompleted;
-
-                // обновляем обе ячейки
-                tr.find(".control-cell").html(
-                    t.control
-                        ? '<img src="images/label-important.svg">'
-                        : ''
-                );
-
-                tr.find(".completed-cell").html('');
             });
 
 
@@ -122,34 +125,37 @@ async function renderTargets(targets) {
                 const newCompleted = !t.completed;
                 const newControl = false;
 
-                const response = await fetch(`/task/completed/${t.itn}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        control: newControl,
-                        completed: newCompleted
-                    })
-                });
+                try {
+                    const response = await fetch(`/completed/${encodeURIComponent(t.itn)}`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            control: newControl,
+                            completed: newCompleted
+                        })
+                    });
 
-                if (!response.ok) {
-                    alert("Ошибка сохранения");
-                    return;
+                    if (!response.ok) {
+                        throw new Error("Ошибка сохранения");
+                    }
+
+                    // Обновляем состояние только после успешного ответа
+                    t.completed = newCompleted;
+                    t.control = newControl;
+
+                    tr.find(".completed-cell").html(
+                        t.completed
+                            ? '<span class="completed-mark" title="Ожидание доставки">✔</span>'
+                            : ""
+                    );
+
+                    tr.find(".control-cell").html("");
+                } catch (error) {
+                    console.error(error);
+                    showError("Не удалось изменить статус задачи");
                 }
-
-                // обновляем объект
-                t.completed = newCompleted;
-                t.control = newControl;
-
-                // обновляем обе ячейки
-                tr.find(".completed-cell").html(
-                    t.completed
-                        ? '<img src="images/purchase-check.svg">'
-                        : ''
-                );
-
-                tr.find(".control-cell").html('');
             });
         }
 
@@ -165,7 +171,7 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${lastAction.last_action}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(lastAction.last_action_date)}</td>
@@ -190,7 +196,7 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${lastAction.last_action}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(lastAction.last_action_date)}</td>
@@ -214,7 +220,7 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${lastAction.last_action}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(lastAction.last_action_date)}</td>
@@ -238,7 +244,7 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${lastAction.last_action}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(lastAction.last_action_date)}</td>
@@ -262,7 +268,7 @@ async function renderTargets(targets) {
                     <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${lastAction.last_action}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(lastAction.last_action_date)}</td>
@@ -282,10 +288,10 @@ async function renderTargets(targets) {
             const tr = $(`
                 <tr class="tr-hover" data-id="${t.itn}">
                     <td class="td-w4" data-title="num">${idxSuspended}</td>
-                    <td class="td-w12" data-title="create">${t.creation_date}</td>
+                    <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
                     <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
                     <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
-                    <td data-title="name" data-type="currency">${t.seller_name}</td>
+                    <td class="td-w34" data-title="name" data-type="currency">${t.seller_name}</td>
                     <td class="td-w4" data-title="platform" data-type="currency">${t.platform || "--"}</td>
                     <td class="td-w12" data-title="status" data-type="currency">${getLastAction(t).last_status}</td>
                     <td class="td-w12" data-title="date" data-type="currency">${formatDate(getLastAction(t).last_action_date)}</td>
@@ -334,4 +340,115 @@ function loadDetailsPage(itn) {
     window.location.href = `/details/${encodeURIComponent(itn)}`;
 }
 
+
+/*==========================
+    ПОИСК ПО ОГРН / ИМЕНИ 
+===========================*/
+
+// выбор параметров поиска  
+function selectSearchParam(value) {
+    if (/^\d+$/.test(value)) {
+        return "psrn";
+    } else if (/^[a-zA-Zа-яА-Я\s\-\.]+$/.test(value)) {
+        return "seller_name";
+    } else {
+        return "error";
+    }
+}
+
+// динамический поиск
+
+let timeout = null;
+let searchCache = [];
+
+$(document).on("input", "#search-input", function () {
+    const value = $(this).val().trim();
+
+    clearTimeout(timeout);
+
+    if (value.length < 3) return;
+
+    timeout = setTimeout(async () => {
+
+        const field = selectSearchParam(value);
+
+        if (field === "error") return;
+
+        const response = await fetch(`/search?field=${field}&value=${value}`);
+        const result = await response.json();
+        searchCache = result;
+
+        console.log(result);
+
+        // тут рендер результатов
+        renderSearchResults(result);
+
+    }, 300); // debounce
+});
+
+
+// рендер результатов поиска 
+function renderSearchResults(data) {
+    const container = $("#search-results");
+    container.empty();
+
+    if (!data.length) {
+        $("#search-input").val("Не найден");
+        container.hide();
+        return;
+    }
+
+    data.forEach((item, index) => {
+        container.append(`
+            <div class="search-item" data-index="${index}">${item.seller_name}</div>
+        `);
+    });
+
+    container.show();
+}
+
+// вывод результатов в таблицу
+$(document).on("click", ".search-item", function () {
+    const text = $(this).text().trim();
+    const id = $(this).data("id");
+
+    $("#search-input").val(text);
+    $("#search-results").hide();
+
+    $(".result-serch-tbl").removeClass('invisible');
+
+    console.log("Выбран ID:", id);
+
+    const index = $(this).data("index");
+    const t = searchCache[index];
+
+    let caseStatus = null;
+
+    if (t.case_in_progress) {
+        caseStatus = getLastAction(t).last_status;
+    } else {
+        caseStatus = "Кейс завершен"
+    }
+
+    let tr;
+    const tbodySearchResult = $("#search-table");
+    tbodySearchResult.empty();
+    tr = $(`
+			<tr class="tr-hover" data-id="${t.itn}">
+                <td class="td-w4" data-title="num">1</td>
+                <td class="td-w12" data-title="create">${formatDate(t.creation_date)}</td>
+                <td class="td-w12" data-title="itn" data-type="currency">${t.itn}</td>
+                <td class="td-w12" data-title="psrn" data-type="currency">${t.psrn}</td>
+                <td data-title="name" data-type="currency">${t.seller_name}</td>
+                <td class="td-w4" data-title="platform" data-type="currency">${t.platform}</td>
+                <td class="td-w12" data-title="status" data-type="currency">${caseStatus}</td>
+                <td class="td-w12" data-title="date" data-type="currency">${formatDate(getLastAction(t).last_action_date) || "--"}</td>
+                <td data-title="executant" data-type="currency">${t.executant}</td>
+            </tr>`);
+    tbodySearchResult.append(tr);
+    tr.on("click", () => {
+        loadDetailsPage(t.itn);
+    });
+
+});
 

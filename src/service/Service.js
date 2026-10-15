@@ -19,4 +19,20 @@ export class Service {
         const target = new Target(data);
         return await this.repo.createTarget(target);
     }
+
+    async search(field, value) {
+        return await this.repo.search(field, value);
+    }
+
+    async updateImportant(itn, data) {
+        return await this.repo.updateImportant(itn, data);
+    }
+
+    async updateCompleted(itn, data) {
+        return await this.repo.updateCompleted(itn, data);
+    }
+
+    async update(itn, data) {
+        return await this.repo.update(itn, data);
+    }
 }

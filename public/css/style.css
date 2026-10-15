@@ -128,14 +128,77 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-.comment-mark .comment-mark-item img {
-  width: 16px;
-  height: 16px;
-  margin: 0 2px 0 2px;
+  margin: 2px 0 2px 0;
 }
 .comment-mark .comment-mark-item p:nth-of-type(2) {
   font-weight: 600;
+}
+
+/*=====================
+    MAIN PAGE SEARCH 
+======================*/
+/*Mark Images*/
+.control-mark {
+  font-size: 10px;
+  color: rgb(186, 34, 34);
+  text-align: center;
+  font-weight: 900;
+  border: 2px solid;
+  border-radius: 50%;
+  padding: 2px 7px 2px 7px;
+}
+
+.completed-mark {
+  font-size: 9px;
+  color: rgb(38, 171, 49);
+  text-align: center;
+  font-weight: 900;
+  border: 2px solid;
+  border-radius: 50%;
+  padding: 2px 5px 2px 6px;
+}
+
+.mark-margin {
+  margin: 0 4px 0 4px;
+}
+
+/* Search */
+.search-results {
+  border: 1px solid rgb(204, 192, 192);
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  display: none;
+  width: 100%;
+}
+
+.search-item {
+  padding: 6px;
+  font-family: "Montserrat";
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.search-item:hover {
+  background: rgb(179, 215, 215);
+  cursor: pointer;
+}
+
+.input-search-wrapper {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 /*====================
@@ -143,6 +206,12 @@
 =====================*/
 .container {
   margin: 5% 3%;
+}
+
+td {
+  font-family: "Montserrat", serif;
+  color: #000;
+  font-weight: 500;
 }
 
 .responsive-table thead {
@@ -169,6 +238,10 @@
 
 .td-w22 {
   width: 22%;
+}
+
+.td-w34 {
+  width: 34%;
 }
 
 .invisible {
@@ -243,8 +316,8 @@
   outline: none;
   resize: none;
   border: 1px solid rgb(134, 188, 37);
-  font-family: "Roboto";
-  font-weight: 400;
+  font-family: "Montserrat", serif;
+  font-weight: 500;
   color: #000000;
   font-size: 14px;
 }

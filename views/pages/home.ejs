@@ -3,15 +3,9 @@
 
         <h1 class="section-title">Поиск</h1>
         <p>По ИМЕНИ или ОГРН / ОГРНИП</p>
-        <div class="flex flex-wrap formbold--mx-3">
-            <div class="w-full">
-                <div class="formbold-mb-5 w-full">
-                    <div class="formbold-mb-5 input-search">
-                        <input id="search-input" type="text" class="formbold-form-input" />
-                        <div id="search-results" class="search-results"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="input-search-wrapper">
+            <input id="search-input" type="text" class="formbold-form-input" />
+            <div id="search-results" class="search-results"></div>
         </div>
     </div>
     <div class="result-serch-tbl invisible">
@@ -46,14 +40,14 @@
             <ul>
                 <li>
                     <div class="comment-mark-item">
-                        <p>Цель маркированная "</p><img src="../icons/label-important.png" alt="">
-                        <p>" намечена для закупки.</p>
+                        <p>Цель маркированная </p><span class="control-mark mark-margin">!</span>
+                        <p> намечена для закупки.</p>
                     </div>
                 </li>
                 <li>
                     <div class="comment-mark-item">
-                        <p>Цель маркированная "</p><img src="../icons/purchase-check.png" alt="">
-                        <p>" ожидание доставки заказа.</p>
+                        <p>Цель маркированная </p><span class="completed-mark mark-margin">✔</span>
+                        <p>ожидание доставки заказа.</p>
                     </div>
                 </li>
                 <li>

@@ -146,10 +146,9 @@
                     </div>
 
                     <div class="field-value store-link-value">
-                        <input type="text" name="link-store" id="link-store">
+                        <input type="text" name="link_store" id="link-store">
                         <button type="button" class="link-btn" id="open-store-btn" title="Перейти в магазин">↗</button>
-                        <button type="button" class="link-btn" id="clear-store-btn"
-                            title="Очистить поле">&#x2715</button>
+                        <button type="button" class="link-btn" id="clear-store-btn" title="Очистить поле">&#x2715</button>
                     </div>
 
 
@@ -159,7 +158,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="monthly-revenue" id="monthly-revenue">
+                        <input id="monthly-revenue" name="monthly_revenue" type="text">
                     </div>
 
 
@@ -169,7 +168,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="sales-number" id="sales-number">
+                        <input type="text" name="sales_number" id="sales-number">
                     </div>
 
 
@@ -179,7 +178,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input type="text" name="remaining-stock" id="remaining-stock">
+                        <input type="text" name="remaining_stock" id="remaining-stock">
                     </div>
 
                 </div>
@@ -224,8 +223,7 @@
 
                             <input type="text" name="product_link" id="product-link">
                             <button type="button" class="link-btn open-product-btn" title="Перейти к товару">↗</button>
-                            <button type="button" class="link-btn clear-product-btn"
-                                title="Очистить поле">&#x2715</button>
+                            <button type="button" class="link-btn clear-product-btn" title="Очистить поле">&#x2715</button>
 
                         </div>
 
@@ -246,17 +244,15 @@
                         </div>
 
                         <div class="field-value">
-                            <input id="item-purchase-date" type="date">
+                            <input name="item_purchase_date" id="item-purchase-date" type="date">
                         </div>
 
                     </div>
                 </div>
             </div>
             <div class="product-control">
-                <button type="button" id="add-product-btn" class="add-product-btn" title="Добавить товар">
-                    &plus;</button>
-                <button type="button" id="delete-product-btn" class="delete-product-btn" title="Удалить товар">&minus;
-                </button>
+                <button type="button" id="add-product-btn" class="add-product-btn" title="Добавить товар">&plus;</button>
+                <button type="button" id="delete-product-btn" class="delete-product-btn" title="Удалить товар">&minus;</button>
             </div>
 
         </section>
@@ -273,7 +269,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="cd-letter-date" type="date">
+                        <input name="cd_letter_date" id="cd-letter-date" type="date">
                     </div>
 
                 </div>
@@ -291,7 +287,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="lawsuit-date" type="date">
+                        <input name="lawsuit_date" id="lawsuit-date" type="date">
                     </div>
 
                     <div class="field-label">
@@ -299,7 +295,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="lawsuit-decision-date" type="date">
+                        <input name="lawsuit_decision_date" id="lawsuit-decision-date" type="date">
                     </div>
                 </div>
             </div>
@@ -316,7 +312,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="appeal-date" type="date">
+                        <input name="appeal_date" id="appeal-date" type="date">
                     </div>
 
                     <div class="field-label">
@@ -324,7 +320,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="appeal_decision_date" type="date">
+                        <input name="appeal_decision_date" id="appeal_decision_date" type="date">
                     </div>
                 </div>
             </div>
@@ -342,7 +338,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="execution-date" type="date">
+                        <input name="execution_date" id="execution-date" type="date">
                     </div>
 
                 </div>
@@ -377,7 +373,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input id="case-complete-date" type="date">
+                        <input name="" id="case-complete-date" type="date">
                     </div>
 
                 </div>
@@ -389,17 +385,17 @@
             <div class="details-btn-container">
                 <button type="button">Удалить кейс</button>
                 <button type="button">Перезапустить кейс</button>
-                <button type="button">Сохранить</button>
+                <button type="submit">Сохранить</button>
+            </div>
+        </section>
+
+        <section class="details-secction save-btn-out">
+            <div class="save-btn-container">
+                <button type="submit">Сохранить</button>
             </div>
         </section>
 
     </form>
-
-    <section class="details-secction save-btn-out">
-        <div class="save-btn-container">
-            <button type="button">Сохранить</button>
-        </div>
-    </section>
 
     <!-- History block  invisible-->
 
@@ -410,11 +406,11 @@
             <button class="accordion">
                 <div>
                     <span>Кейс создан:</span>
-                    <span class="h-creation-date">12.12.2025</span>
+                    <span class="h-creation-date"></span>
                 </div>
                 <div>
                     <span>Завершен:</span>
-                    <span class="h-case-complete-date">12.12.2025</span>
+                    <span class="h-case-complete-date"></span>
                 </div>
             </button>
             <div class="panel">
@@ -422,18 +418,18 @@
                     <div class="history-grid">
 
                         <div class="history-label">Дата создания</div>
-                        <div class="history-value">12.12.2025</div>
+                        <span class="history-value h-creation-date"></span>
                         <div class="history-label">Дата завершения</div>
-                        <div class="history-value">12.12.2025</div>
+                        <span class="history-value h-case-complete-date"></span>
 
                         <div class="history-label">Последнее действие</div>
-                        <div class="history-value">Арбитраж</div>
+                        <span class="history-value h-last-status"></span>
                         <div class="history-label">Дата последнего действия</div>
-                        <div class="history-value">12.12.2025</div>
+                        <span class="history-value h-last-action-date"></span>
 
                         <div class="history-label">Ссылка на магазин</div>
                         <div class="history-link">
-                            <span>www.wildberries.ru/seller/123456789/dualshock4</span>
+                            <span class="h-link-store"></span>
                             <button type="button" class="link-btn" title="Перейти к товару">↗</button>
                         </div>
 

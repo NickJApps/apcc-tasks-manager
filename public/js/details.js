@@ -21,7 +21,7 @@ async function loadTaskDetails(itn) {
         const task = await response.json();
 
         // Распределить данные task по полям формы
-        console.log(task);
+        // console.log(task);
 
         container = $(".test-purchase-container");
         template = container.find(".test-purchase-item.template");
@@ -228,7 +228,7 @@ $(document).on("click", ".delete-product-btn", function () {
 =================================*/
 
 // Очистить поле store link
-$(document).on("click", "#clear-store-btn", function(){
+$(document).on("click", "#clear-store-btn", function () {
     $('input[id="link-store"]').val('');
 });
 
@@ -284,10 +284,6 @@ $(document).on("click", ".accordion", function () {
     panel.slideToggle();
 });
 
-
-
-// **************************************************
-
 /*======================================== 
  Сохранить изменения detales в базу данных
 =========================================*/
@@ -295,85 +291,92 @@ $(document).on("click", ".accordion", function () {
 $(document).on("submit", "#detales-form", async function (e) {
     e.preventDefault();
 
-    const formData = Object.fromEntries(new FormData(this));
+    const form = this;
+    const itn = $(form).data("itn");
+
+    if (!itn) {
+        showError("Не удалось определить ITN задачи");
+        return;
+    }
+
+    const formData = Object.fromEntries(new FormData(form));
+
+    // Удаляем поля повторяющихся товаров
     delete formData.product;
     delete formData.product_price;
     delete formData.product_link;
+    delete formData.item_purchase_date;
 
-    let products = [];
-
-    const completeDate = $('#case-complete-date').val();
-    const status = $('#status-to-date').val();
+    const completeDate = $("#case-complete-date").val();
+    const status = $("#status-to-date").val();
 
     if (completeDate && !status) {
-        alert("Выберете статус завершения кейса");
+        showError("Выберите статус завершения кейса");
         return;
     }
 
     if (status && !completeDate) {
-        alert("Установите дату завершения кейса");
+        showError("Установите дату завершения кейса");
         return;
     }
 
-    $('.detales-purchase-container .detales-purchase-item').each(function () {
+    const products = [];
 
+    $(".test-purchase-container .test-purchase-item").each(function () {
         const product = $(this).find('[name="product"]').val();
         const price = $(this).find('[name="product_price"]').val();
         const link = $(this).find('[name="product_link"]').val();
-        const item_purchase_date = $(this).find('[name="item_purchase_date"]').val();
+        const item_purchase_date = $(this)
+            .find('[name="item_purchase_date"]')
+            .val();
 
         if (product && product !== "0") {
             products.push({
                 product,
-                product_price: Number(price),
+                product_price: price === "" ? null : Number(price),
                 product_link: link,
                 item_purchase_date
             });
         }
     });
 
-    /*
-        if (!products.length) {
-            alert('Добавьте хотя бы один корректный продукт');
-            return;
-        }
-    */
-
     formData.test_purchase_date = getLatestDate(products);
     formData.test_purchases = products;
     formData.status_to_date = putCaseStatus(formData);
 
-    if (COMPLETION_STATUS.has(formData.status_to_date)) {
-        formData.case_in_progress = false;
+    // Состояние задачи рассчитываем исходя из её статуса
+    formData.case_in_progress = !COMPLETION_STATUS.has(formData.status_to_date);
+
+    try {
+
+        const response = await fetch(
+            `/update/${encodeURIComponent(itn)}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        await showSuccess(result.message || "Задача успешно обновлена!");
+
+        // Переходим на страницу списка задач
+        window.location.href = "/";
+
+    } catch (error) {
+        console.error("Ошибка обновления задачи:", error);
+        showError(error.message || "Не удалось обновить задачу");
     }
-
-    const itn = $(this).data("itn");
-
-    const response = await fetch(`/task/update/${itn}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-    });
-
-    const result = await response.json();
-    console.log("Updated:", result);
-
-    alert("Изменения сохранены!");
-
-    // ⬇ после закрытия alert — загрузить основную страницу
-    loader.loadPage("./pages/main.html").then(html => {
-        $(".main-content").html(html);
-
-        // сброс выделения
-        $("nav .nav-item").removeClass("active");
-
-        // выделяем "Текущее"
-        $('a[data-page="main"]').addClass("active");
-
-        getAllCasesInProgress();
-    });
-
 });
+
 
 // получить последнюю дату для записи в переменную test_purchase_date
 function getLatestDate(products) {
