@@ -166,3 +166,30 @@ export const update = async (req, res) => {
         });
     }
 };
+
+// delete task
+export const deleteCase = async (req, res) => {
+    try {
+        const result = await service.delete(req.params.itn);
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Кейс не найден"
+            });
+        }
+
+        res.json({
+            success: true,
+            message: "Кейс успешно удалён"
+        });
+        
+    } catch (error) {
+        console.error("Ошибка удаления кейса:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Не удалось удалить кейс"
+        });
+    }
+};

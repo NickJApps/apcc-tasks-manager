@@ -46,8 +46,20 @@
                 <div class="step-circle">6</div>
                 <span>Исполнительное</span>
             </div>
+
+            <div class="progress-line" id="completed-step-line"></div>
+
+            <div class="progress-step" id="completed-step-circle">
+                <div class="step-circle">7</div>
+                <span>Завершен</span>
+            </div>
         </div>
 
+    </section>
+
+    <section class="case-complete-info-section invisible">
+        <h3>Текущий кейс завершен:<span id="date-complete-info">12.12.2026</span></h3>
+        <h3>, со статусом:<span id="status-complete-info">Мировое соглашение</span></h3>
     </section>
 
     <form id="detales-form" data-itn="<%= itn %>">
@@ -355,7 +367,7 @@
                     </div>
 
                     <div class="field-value">
-                        <select id="status-to-date" name="case-status">
+                        <select id="status-to-date" name="status_to_date">
                             <option value=""></option>
                             <option value="settlement">Мировое соглашение</option>
                             <option value="withdrawal_of_claim">Отказ от иска</option>
@@ -373,7 +385,7 @@
                     </div>
 
                     <div class="field-value">
-                        <input name="" id="case-complete-date" type="date">
+                        <input name="case_complete_date" id="case-complete-date" type="date">
                     </div>
 
                 </div>
@@ -383,8 +395,8 @@
 
         <section class="details-secction">
             <div class="details-btn-container">
-                <button type="button">Удалить кейс</button>
-                <button type="button">Перезапустить кейс</button>
+                <button id="delete-case" type="button">Удалить кейс</button>
+                <button id="reopen-case" type="button">Перезапустить кейс</button>
                 <button type="submit">Сохранить</button>
             </div>
         </section>
@@ -399,18 +411,25 @@
 
     <!-- History block  invisible-->
 
-    <div class="history-container">
+    <div class="history-container invisible">
         <h2 class="page-title">История</h2>
 
         <div class="history-case pattern">
             <button class="accordion">
                 <div>
                     <span>Кейс создан:</span>
-                    <span class="h-creation-date"></span>
+                    <span id="h-creation-date"></span>
                 </div>
                 <div>
-                    <span>Завершен:</span>
-                    <span class="h-case-complete-date"></span>
+                    <span>завершен:</span>
+                    <span id="h-case-complete-date"></span>
+                </div>
+                <div>
+                    <span>со статусом:</span>
+                    <span id="h-complete-status"></span>
+                </div>
+                <div>
+                    <span class="down-arrow">&#9660;</span>
                 </div>
             </button>
             <div class="panel">
@@ -418,31 +437,31 @@
                     <div class="history-grid">
 
                         <div class="history-label">Дата создания</div>
-                        <span class="history-value h-creation-date"></span>
+                        <span class="history-value" id="h-creation-date"></span>
                         <div class="history-label">Дата завершения</div>
-                        <span class="history-value h-case-complete-date"></span>
+                        <span class="history-value" id="h-case-complete-date"></span>
 
                         <div class="history-label">Последнее действие</div>
-                        <span class="history-value h-last-status"></span>
+                        <span class="history-value" id="h-last-status"></span>
+                        <div class="history-label">результат последнего действия</div>
+                        <span class="history-value" id="h-last-action"></span>
+
                         <div class="history-label">Дата последнего действия</div>
-                        <span class="history-value h-last-action-date"></span>
+                        <span class="history-value" id="h-last-action-date"></span>
+                        <div class="history-label">Завершен со статусом</div>
+                        <span class="history-value" id="h-complete-status"></span>
+                        
+
+                        <!--<div class="history-label">Статус завершения</div>
+                        <span class="history-value h-complete-status" id="h-complete-status"></span>-->
+                        <!--<div class="history-label">Дата завершения</div>
+                        <span class="history-value"></span>-->
 
                         <div class="history-label">Ссылка на магазин</div>
                         <div class="history-link">
-                            <span class="h-link-store"></span>
+                            <span id="h-link-store"></span>
                             <button type="button" class="link-btn" title="Перейти к товару">↗</button>
                         </div>
-
-                        <div class="history-label">Ссылка на товар</div>
-                        <div class="history-link">
-                            <span>www.wildberries.ru/seller/123456789/dualshock4</span>
-                            <button type="button" class="link-btn open-product-btn" title="Перейти к товару">↗</button>
-                        </div>
-
-                        <div class="history-label">Статус завершения</div>
-                        <div class="history-value">Мировое соглашение</div>
-                        <div class="history-label">Дата завершения</div>
-                        <div class="history-value">12.02.2026</div>
 
                     </div>
                 </div>

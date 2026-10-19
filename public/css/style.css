@@ -954,6 +954,8 @@ td {
   color: #fff;
   text-transform: uppercase;
   padding: 10px;
+  font-family: "Montserrat", serif;
+  font-weight: 600;
 }
 
 .save-btn-container button:hover {
@@ -1005,7 +1007,7 @@ Media
     PROGRESS LINE
 ====================== */
 .progress-section {
-  margin: 22px 0 80px 0;
+  margin: 22px 0 7px 0;
 }
 
 .progress {
@@ -1053,7 +1055,7 @@ Media
 
 /* step text */
 .progress-step span {
-  margin-left: 15px;
+  margin-left: 7px;
   white-space: nowrap;
   font-family: "Montserrat", serif;
   font-size: 13px;
@@ -1066,21 +1068,43 @@ Media
           flex: 1;
   height: 3px;
   min-width: 10px;
-  margin: 0 12px;
+  margin: 0 5px;
   background: #9aa9bf;
 }
 
 /* ACTIVE */
 .progress-step.active .step-circle {
-  background: #2bc77b;
+  background: rgb(43, 199, 123);
 }
 
 .progress-step.active span {
-  color: #2bc77b;
+  color: rgb(43, 199, 123);
 }
 
 .progress-line.active {
-  background: #2bc77b;
+  background: rgb(43, 199, 123);
+}
+
+/* ==========================
+    CASE COMPLETE INFO
+=========================== */
+.case-complete-info-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.case-complete-info-section h3 {
+  font-weight: 400;
+  font-family: "Montserrat", serif;
+  font-size: 13px;
+}
+.case-complete-info-section h3 span {
+  margin-left: 5px;
+  color: rgb(43, 199, 123);
+  font-weight: 500;
 }
 
 /* =============================
@@ -1117,6 +1141,9 @@ Media
   color: #000000;
   text-transform: uppercase;
 }
+.history-container .accordion div span:nth-child(2) {
+  margin-right: 5px;
+}
 .history-container .accordion div:nth-last-of-type(1) {
   margin-left: 10px;
 }
@@ -1129,11 +1156,19 @@ Media
   overflow: hidden;
   display: none;
 }
+.history-container .history-case {
+  margin-bottom: 7px;
+}
 
 .history-point-margin {
   margin-top: 13px;
 }
 
+/*
+.h-complete-status {
+    grid-column: span 3;
+}
+*/
 /*==========================
         INVISIBLE
 ===========================*/

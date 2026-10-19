@@ -13,6 +13,8 @@ router.get("/progress", controller.getProgress);
 router.get("/task/byitn/:itn", controller.getSellerDetailsByItn);
 router.post("/task/create", controller.createTarget);
 
+router.delete("/task/delete/:itn", controller.deleteCase);
+
 router.get("/search", controller.search);
 
 router.put("/mark/:itn", controller.updateImportant);

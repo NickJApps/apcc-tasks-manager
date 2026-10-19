@@ -35,4 +35,8 @@ export class Service {
     async update(itn, data) {
         return await this.repo.update(itn, data);
     }
+
+    async delete(itn) {
+        return await this.repo.delete(itn);
+    }
 }

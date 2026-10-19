@@ -33,3 +33,16 @@ function showSuccess(message) {
     });
 }
 
+function showConfirmAction(title, text, buttonText){
+    return Swal.fire({
+        icon: "warning",
+        title: title,
+        text: text,
+        showCancelButton: true,
+        confirmButtonText: buttonText,
+        cancelButtonText: "Отмена",
+        confirmButtonColor: "#d33",
+        reverseButtons: true
+    });
+}
+

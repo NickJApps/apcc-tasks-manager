@@ -20,6 +20,16 @@ async function loadTaskDetails(itn) {
 
         const task = await response.json();
 
+        if (!task.case_in_progress) {
+            $(".case-complete-info-section").removeClass("invisible");
+
+            $("#date-complete-info").text(formatDate(task.case_complete_date));
+            $("#status-complete-info").text(HISTORY_TRANSLATE_STATUS(task.status_to_date));
+
+            // $(".save-change-btn").addClass("invisible");
+            // $(".detales-purchase-add-btn").prop("disabled", true);
+        }
+
         // Распределить данные task по полям формы
         // console.log(task);
 
@@ -30,7 +40,7 @@ async function loadTaskDetails(itn) {
         container.find(".test-purchase-item:not(.template)").remove();
 
         //update status line
-        updateStatusLine(task.status_to_date);
+        updateStatusLine(task);
 
         // general
         $("#creation-date").text(formatDate(task.creation_date));
@@ -138,14 +148,14 @@ async function loadTaskDetails(itn) {
             historyArr.forEach((history, index) => {
 
                 const item = pattern.clone().removeClass("pattern");
-                item.find('[class="h-creation-date"]').text(formatDate(history.h_creation_date));
-                item.find('[class="h-last-status"]').text(history.h_last_status);
-                item.find('[class="h-last-action"]').text(history.h_last_action);
-                item.find('[class="h-last-action-date"]').text(formatDate(history.h_last_action_date));
+                item.find('[id="h-creation-date"]').text(formatDate(history.h_creation_date));
+                item.find('[id="h-last-status"]').text(history.h_last_status);
+                item.find('[id="h-last-action"]').text(history.h_last_action);
+                item.find('[id="h-last-action-date"]').text(formatDate(history.h_last_action_date));
                 item.find('[id="h-products"]').text(history.h_products);
-                item.find('[id="h-link-store"]').val(history.h_link_store);
-                item.find('[id="h-complete-status"]').text(history.h_complete_status);
-                item.find('[class="h-case-complete-date"]').text(formatDate(history.h_case_complete_date));
+                item.find('[id="h-link-store"]').text(history.h_link_store);
+                item.find('[id="h-complete-status"]').text(HISTORY_TRANSLATE_STATUS(history.h_complete_status));
+                item.find('[id="h-case-complete-date"]').text(formatDate(history.h_case_complete_date));
                 container.append(item);
             });
         }
@@ -157,8 +167,11 @@ async function loadTaskDetails(itn) {
 
 // Установить текущий статус для Status Line
 
-function updateStatusLine(status) {
+function updateStatusLine(obj) {
+    const status = getProgressStatus(obj);
+    const isCompleted = Boolean(obj.case_complete_date);
 
+    // Определяем последний достигнутый этап
     const currentIndex = STATUS_STEPS.indexOf(status);
 
     if (currentIndex === -1) {
@@ -166,17 +179,30 @@ function updateStatusLine(status) {
         return;
     }
 
+    // Сначала сбрасываем все этапы
+    STATUS_STEPS.forEach(step => {
+        $(`#${step}-step-line`).removeClass("active");
+        $(`#${step}-step-circle`).removeClass("active");
+    });
+
+    $("#completed-step-line").removeClass("active");
+    $("#completed-step-circle").removeClass("active");
+
+    // Активируем пройденные этапы
     STATUS_STEPS.forEach((step, index) => {
-
-        const stepLine = $(`#${step}-step-line`);
-        const stepCircle = $(`#${step}-step-circle`);
-
         if (index <= currentIndex) {
-            stepLine.addClass("active");
-            stepCircle.addClass("active");
+            $(`#${step}-step-line`).addClass("active");
+            $(`#${step}-step-circle`).addClass("active");
         }
     });
+
+    // Если дело завершено — активируем финальный этап
+    if (isCompleted) {
+        $("#completed-step-line").addClass("active");
+        $("#completed-step-circle").addClass("active");
+    }
 }
+
 
 // СТАТУСЫ ДЛЯ STATUS LINE
 
@@ -186,11 +212,22 @@ const STATUS_STEPS = [
     "letter",
     "lawsuit",
     "appeal",
-    "execution"
+    "execution",
+    "completed"
 ];
 
+function getProgressStatus(obj) {
+    if (obj.execution_date) return "execution";
+    if (obj.appeal_date || obj.appeal_decision_date) return "appeal";
+    if (obj.lawsuit_date || obj.lawsuit_decision_date) return "lawsuit";
+    if (obj.cd_letter_date) return "letter";
+    if (obj.test_purchase_date) return "purchase";
+
+    return "target";
+}
+
 /*======================================
-    ДОБАВИТ И УДАЛИТЬ ТОВАРЫ 
+    ДОБАВИТЬ И УДАЛИТЬ ТОВАРЫ 
 =======================================*/
 
 // Добавить товар в закупку 
@@ -213,14 +250,19 @@ $(document).on("click", ".add-product-btn", function () {
 });
 
 // Удалить товар из закупки
-
 $(document).on("click", ".delete-product-btn", function () {
     const $container = $(".test-purchase-container");
-    const $items = $container.find(".test-purchase-item.removable");
 
-    if ($items.length > 0) {
-        $items.last().remove();
+    // Все реальные товары, исключая шаблон
+    const $items = $container.find(".test-purchase-item:not(.template)");
+
+    // Не позволяем удалить последний товар
+    if ($items.length <= 1) {
+        return;
     }
+
+    // Удаляем последний товар
+    $items.last().remove();
 });
 
 /*================================
@@ -461,4 +503,216 @@ function HISTORY_TRANSLATE_STATUS(status) {
     };
 
     return map[status];
+}
+
+/* ==============================
+    УДАЛИТЬ КЕЙС
+=============================== */
+$(document).on("click", "#delete-case", async function () {
+    const itn = $("#detales-form").data("itn");
+
+    if (!itn) {
+        showError("Не удалось определить ITN кейса");
+        return;
+    }
+
+    const confirmation = await showConfirmAction("Внимание!", "Кейс будет удалён без возможности восстановления.", "Удалить")
+
+    if (!confirmation.isConfirmed) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/task/delete/${encodeURIComponent(itn)}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                result.message || "Не удалось удалить кейс"
+            );
+        }
+
+        await showSuccess("Кейс успешно удалён!");
+
+        // Возвращаемся на главную после закрытия сообщения
+        window.location.href = "/";
+
+    } catch (error) {
+        console.error("Ошибка удаления кейса:", error);
+        showError(error.message || "Ошибка при удалении кейса");
+    }
+});
+
+/*=================================
+    ПЕРЕЗАПУСК КЕЙСА
+===================================*/
+$(document).on("click", "#reopen-case", async function () {
+
+    const itn = $("#detales-form").data("itn");
+
+    if (!itn) {
+        showError("Не удалось определить ITN кейса");
+        return;
+    }
+
+    const $button = $(this);
+    $button.prop("disabled", true);
+
+    try {
+
+        // 1. Получаем актуальные данные кейса
+
+        let response = await fetch(
+            `/task/byitn/${encodeURIComponent(itn)}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Не удалось загрузить данные кейса");
+        }
+
+        const task = await response.json();
+
+        // 2. Проверяем статус завершения
+
+        if (!COMPLETION_STATUS.has(task.status_to_date)) {
+            showError("Кейс должен быть завершён перед перезапуском.");
+            return;
+        }
+
+        // 3. Подтверждение пользователя
+
+        const confirmation = await showConfirmAction("Перезапустить кейс?", "Данные текущего кейса будут очищены, а сведения о нём сохранены в историю.", "Перезапустить");
+        
+        if (!confirmation.isConfirmed) return;
+
+        // 4. Формируем запись истории
+
+        const lastAction = getLastAction(task);
+
+        const historyArr = [...(task.history || [])];
+
+        const toHistory = {
+            h_creation_date: task.creation_date,
+            h_last_status: lastAction.last_status,
+            h_last_action: lastAction.last_action,
+            h_last_action_date: lastAction.last_action_date,
+            h_link_store: task.link_store,
+            h_products: task.products,
+            h_complete_status: task.status_to_date,
+            h_case_complete_date: task.case_complete_date
+        };
+
+        historyArr.push(toHistory);
+
+        // 5. Обновляем данные кейса
+
+        const newDate = getLocalDate();
+
+        const taskToUpdate = {
+            ...task,
+
+            history: historyArr,
+
+            creation_date: newDate,
+            quarter: getQuarter(newDate),
+
+            // Очищаем предыдущий цикл
+            test_purchase_date: null,
+            test_purchases: null,
+            cd_letter_date: null,
+            lawsuit_date: null,
+            lawsuit_decision_date: null,
+            appeal_date: null,
+            appeal_decision_date: null,
+            execution_date: null,
+
+            comment: null,
+
+            case_complete_date: null,
+            status_to_date: "target",
+            case_in_progress: true,
+
+            control: false,
+            completed: false,
+
+            executant: "APCC"
+        };
+
+        // Не передаём системные поля
+        delete taskToUpdate._id;
+        delete taskToUpdate.itn;
+
+        // 6. Сохраняем изменения
+
+        response = await fetch(
+            `/update/${encodeURIComponent(itn)}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(taskToUpdate)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Не удалось перезапустить кейс");
+        }
+
+        // 7. Уведомление и переход
+
+        await showSuccess("Кейс успешно перезапущен!");
+
+        window.location.href = "/";
+
+    } catch (error) {
+
+        console.error("Ошибка перезапуска кейса:", error);
+
+        showError(error.message || "Ошибка при перезапуске кейса");
+
+    } finally {
+
+        $button.prop("disabled", false);
+
+    }
+
+});
+
+function getLocalDate() {
+    const today = new Date();
+    return new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+        .toISOString()
+        .split('T')[0];
+}
+
+function getQuarter(dateStr) {
+
+    if (!dateStr) return null;
+
+    let year, month;
+
+    // если Excel вернул Date
+    if (dateStr instanceof Date) {
+        year = dateStr.getFullYear();
+        month = dateStr.getMonth() + 1;
+    }
+
+    // формат YYYY-MM-DD
+    else if (typeof dateStr === "string" && dateStr.includes("-")) {
+        [year, month] = dateStr.split("-").map(Number);
+    }
+
+    // формат DD.MM.YYYY
+    else if (typeof dateStr === "string" && dateStr.includes(".")) {
+        [, month, year] = dateStr.split(".").map(Number);
+    }
+
+    if (month <= 3) return `Q4 FY${year - 1}`;
+    if (month <= 6) return `Q1 FY${year}`;
+    if (month <= 9) return `Q2 FY${year}`;
+    return `Q3 FY${year}`;
 }

@@ -103,4 +103,10 @@ export class Repository {
         );
     }
 
+    // Удалить кейс
+    async delete(itn) {
+        await this.connect();
+        return await this.collection.deleteOne({ itn });
+    }
+
 }
