@@ -63,8 +63,10 @@ async function loadTaskDetails(itn) {
         $("#sales-number").val(task.sales_number);
         $("#remaining-stock").val(task.remaining_stock);
 
-        if (purchases) {
+        if (purchases && purchases.length > 0) {
+
             purchases.forEach((purchase, index) => {
+
                 const item = template
                     .clone(false)
                     .removeClass("template")
@@ -80,11 +82,11 @@ async function loadTaskDetails(itn) {
                 item.find('[id="item-purchase-date"]').val(purchase.item_purchase_date || "");
 
                 if (purchase.item_purchase_date) {
+
                     item.addClass("loaded-purchase");
 
                     item.find("input, select").prop("disabled", true);
                     item.find(".delete-product-btn").addClass("invisible");
-
                     item.find(".clear-product-btn").addClass("invisible");
 
                 } else {
@@ -93,7 +95,22 @@ async function loadTaskDetails(itn) {
 
                 container.append(item);
             });
+
+        } else {
+
+            // Если товаров нет, создаём один пустой блок
+            const item = template
+                .clone(false)
+                .removeClass("template")
+                .prop("hidden", false);
+
+            item.find(".purchase-subtitle").text("Товар № 1");
+
+            container.append(item);
         }
+
+        // Обновляем доступность удаления после загрузки
+        updateDeleteButton();
 
 
         // stages - cd letter
@@ -585,7 +602,7 @@ $(document).on("click", "#reopen-case", async function () {
         // 3. Подтверждение пользователя
 
         const confirmation = await showConfirmAction("Перезапустить кейс?", "Данные текущего кейса будут очищены, а сведения о нём сохранены в историю.", "Перезапустить");
-        
+
         if (!confirmation.isConfirmed) return;
 
         // 4. Формируем запись истории
