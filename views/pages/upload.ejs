@@ -1,0 +1,147 @@
+<!-- Сохранить данные из файла -->
+<h1 class="page-title">Управление базой данных</h1>
+<div class="upload-container">
+    <div class="card">
+        <h2>Сохранить данные из файла в базу данных</h2>
+        <div class="drop_box">
+            <form id="send-file-form" class="send-file-form">
+                <div class="file-upload">
+                    <p>Поддерживаемый формат файла: xlsx</p>
+                    <p class="file-to-fill">Для создания файла скачайте <a href="/files/template.xlsx" download>образец</a> и заполните.</p>
+                    <div class="file-chooser">
+                        <p class="selected-file-name" id="file-name">Файл не выбран</p>
+                        <label class="btn-select" for="file-input">Выбрать файл</label>
+                        <input type="file" id="file-input" accept=".xlsx" hidden>
+                    </div>
+                </div>
+                <div class="send-btn-container">
+                    <button class="send-file-btn" type="submit">Загрузить данные из файла в базу</button>
+                </div>
+
+                <div class="btn-confirm-container">
+                    <!--<button class="btn-confirm" type="submit" id="send-file">Сохранить файл</button>-->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Сохранить данные в файл -->
+
+<div class="upload-container">
+    <div class="card">
+        <h2>Сохранить данные из базы данных в файл</h2>
+        <div class="drop_box">
+            <form id="get-data-form">
+                <div class="file-upload ">
+                    <p>Поддерживаемый формат файла: xlsx</p>
+                    <p class="file-to-fill">Какие кейсы выбрать для сохранения.</p>
+                    <div class="upload-select-data">
+                        <div class="input-data">
+                            <input type="radio" value="all_cases" id="select-all-cases" name="getBy" checked>
+                            <label for="select-all-cases" class="radio-seller-id">Все</label>
+
+                            <input type="radio" value="opened_cases" id="select-opened-cases" name="getBy">
+                            <label for="select-opened-cases" class="radio">Только незавершенные дела</label>
+
+                            <input type="radio" value="closed_cases" id="select-closed-cases" name="getBy">
+                            <label for="select-closed-cases" class="radio">Только завершенные дела</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-upload mt-25">
+                    <p class="file-to-fill">Выберите данные для сохранения.</p>
+                    <p>Информация о селлере</p>
+                    <div class="upload-select-data">
+                        <div class="input-data">
+                            <input type="checkbox" id="cbx-seller-name" name="seller_name">
+                            <label for="cbx-seller-name">Имя</label>
+
+                            <input type="checkbox" id="cbx-psrn" name="psrn">
+                            <label for="cbx-psrn">ОГРН / ОГРНИП</label>
+
+                            <input type="checkbox" id="cbx-itn" name="itn">
+                            <label for="cbx-itn">ИНН</label>
+
+                            <input type="checkbox" id="cbx-creation-date" name="creation_date">
+                            <label for="cbx-creation-date">Дата создания</label>
+
+                            <input type="checkbox" id="cbx-region" name="region">
+                            <label for="cbx-region">Регион</label>
+
+                            <input type="checkbox" id="cbx-address" name="address">
+                            <label for="subscribe">Адрес</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-upload mt-25">
+                    <p>Информация о магазине</p>
+                    <div class="upload-select-data">
+                        <div class="input-data">
+                            <input type="checkbox" id="cbx-link-store" name="link_store">
+                            <label for="cbx-link-store">Магазин (ссылка)</label>
+
+                            <input type="checkbox" id="cbx-monthly-revenue" name="monthly_revenue">
+                            <label for="cbx-monthly-revenue">Доход в месяц</label>
+
+                            <input type="checkbox" id="cbx-sales-number" name="sales_number">
+                            <label for="cbx-sales-number">Кол-во продаж</label>
+
+                            <input type="checkbox" id="cbx-remaining-stock" name="remaining_stock">
+                            <label for="cbx-remaining-stock">Остаток</label>
+
+                            <input type="checkbox" id="cbx-comment" name="comment">
+                            <label for="cbx-comment">Комментарий</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-upload mt-25">
+                    <p>Информация о закупке</p>
+                    <div class="upload-select-data">
+                        <div class="input-data">
+                            <input type="checkbox" id="cbx-test-purchase-date" name="test_purchase_date">
+                            <label for="cbx-test-purchase-date">Закупка (Дата)</label>
+
+                            <input type="checkbox" id="cbx-platform" name="platform">
+                            <label for="cbx-platform">Платформа</label>
+
+                            <input type="checkbox" id="cbx-product" name="product">
+                            <label for="cbx-product">Продукт</label>
+
+                            <input type="checkbox" id="cbx-product-price" name="product_price">
+                            <label for="cbx-product-price">Цена</label>
+
+                            <input type="checkbox" id="cbx-product-link" name="product_link">
+                            <label for="cbx-product-link">Карточка товара (ссылка)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-upload mt-25">
+                    <p>Движение дела</p>
+                    <div class="upload-select-data">
+                        <div class="input-data">
+                            <input type="checkbox" id="cbx-cd-letter-date" name="cd_letter_date">
+                            <label for="cbx-cd-letter-date">Претензия</label>
+
+                            <input type="checkbox" id="cbx-lawsuit-date" name="lawsuit_date">
+                            <label for="cbx-lawsuit-date">Арбитраж</label>
+
+                            <input type="checkbox" id="cbx-appeal-date" name="appeal_date">
+                            <label for="cbx-appeal-date">Апелляция</label>
+
+                            <input type="checkbox" id="cbx-execution_date" name="execution_date">
+                            <label for="cbx-execution_date">Исполнительное</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-confirm-container">
+                    <button class="btn-confirm" type="submit" id="get-data">Сохранить в файл</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

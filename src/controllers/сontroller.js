@@ -15,6 +15,10 @@ export const details = (req, res) => {
     });
 };
 
+export const upload = (req, res) => {
+    res.render("pages/upload");
+};
+
 export const getSellerDetailsByItn = async (req, res) => {
     const task = await service.getSellerDetailsByItn(req.params.itn);
 
@@ -183,7 +187,7 @@ export const deleteCase = async (req, res) => {
             success: true,
             message: "Кейс успешно удалён"
         });
-        
+
     } catch (error) {
         console.error("Ошибка удаления кейса:", error);
 

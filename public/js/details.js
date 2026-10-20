@@ -109,9 +109,6 @@ async function loadTaskDetails(itn) {
             container.append(item);
         }
 
-        // Обновляем доступность удаления после загрузки
-        updateDeleteButton();
-
 
         // stages - cd letter
 

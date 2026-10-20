@@ -6,6 +6,7 @@ const router = express.Router();
 router.get("/", controller.home);
 router.get("/create", controller.create);
 router.get("/details", controller.details);
+router.get("/upload", controller.upload);
 
 router.get("/details/:itn", controller.details);
 router.get("/progress", controller.getProgress);
