@@ -182,63 +182,36 @@ async function loadTaskDetails(itn) {
 // Установить текущий статус для Status Line
 
 function updateStatusLine(obj) {
-    const status = getProgressStatus(obj);
-    const isCompleted = Boolean(obj.case_complete_date);
-
-    // Определяем последний достигнутый этап
-    const currentIndex = STATUS_STEPS.indexOf(status);
-
-    if (currentIndex === -1) {
-        console.warn(`Unknown status: ${status}`);
-        return;
+    if(obj.test_purchase_date){
+        $('#purchase-step-circle').addClass("active");
+        $('#purchase-step-line').addClass("active");
     }
 
-    // Сначала сбрасываем все этапы
-    STATUS_STEPS.forEach(step => {
-        $(`#${step}-step-line`).removeClass("active");
-        $(`#${step}-step-circle`).removeClass("active");
-    });
+    if(obj.cd_letter_date){
+        $('#letter-step-circle').addClass("active");
+        $('#letter-step-line').addClass("active");
+    }
 
-    $("#completed-step-line").removeClass("active");
-    $("#completed-step-circle").removeClass("active");
+    if (obj.lawsuit_date || obj.lawsuit_decision_date) {
+        $('#lawsuit-step-circle').addClass("active");
+        $('#lawsuit-step-line').addClass("active");
+    }
 
-    // Активируем пройденные этапы
-    STATUS_STEPS.forEach((step, index) => {
-        if (index <= currentIndex) {
-            $(`#${step}-step-line`).addClass("active");
-            $(`#${step}-step-circle`).addClass("active");
-        }
-    });
+    if (obj.appeal_date || obj.appeal_decision_date) {
+        $('#appeal-step-circle').addClass("active");
+        $('#appeal-step-line').addClass("active");
+    }
 
-    // Если дело завершено — активируем финальный этап
-    if (isCompleted) {
-        $("#completed-step-line").addClass("active");
+    if (obj.execution_date){
+        $('#execution-step-circle').addClass("active");
+        $('#execution-step-line').addClass("active");
+    }
+
+    if(!obj.case_in_progress){
         $("#completed-step-circle").addClass("active");
     }
 }
 
-
-// СТАТУСЫ ДЛЯ STATUS LINE
-
-const STATUS_STEPS = [
-    "target",
-    "purchase",
-    "letter",
-    "lawsuit",
-    "appeal",
-    "execution",
-    "completed"
-];
-
-function getProgressStatus(obj) {
-    if (obj.execution_date) return "execution";
-    if (obj.appeal_date || obj.appeal_decision_date) return "appeal";
-    if (obj.lawsuit_date || obj.lawsuit_decision_date) return "lawsuit";
-    if (obj.cd_letter_date) return "letter";
-    if (obj.test_purchase_date) return "purchase";
-
-    return "target";
-}
 
 /*======================================
     ДОБАВИТЬ И УДАЛИТЬ ТОВАРЫ 
