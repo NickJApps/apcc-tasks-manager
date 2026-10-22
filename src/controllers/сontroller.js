@@ -1,4 +1,5 @@
 import { Service } from "../service/Service.js";
+import ExcelJS from "exceljs";
 const service = new Service();
 
 export const home = async (req, res) => {
@@ -194,6 +195,95 @@ export const deleteCase = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Не удалось удалить кейс"
+        });
+    }
+};
+
+// export cases
+const ALLOWED_EXPORT_TYPES = [
+    "opened_cases",
+    "closed_cases",
+    "all_cases"
+];
+
+const ALLOWED_EXPORT_FIELDS = [
+    "seller_name",
+    "psrn",
+    "itn",
+    "creation_date",
+    "region",
+    "address",
+    "link_store",
+    "monthly_revenue",
+    "sales_number",
+    "remaining_stock",
+    "comment",
+    "test_purchase_date",
+    "platform",
+    "product",
+    "product_price",
+    "product_link",
+    "cd_letter_date",
+    "lawsuit_date",
+    "lawsuit_decision_date",
+    "appeal_date",
+    "appeal_decision_date",
+    "execution_date",
+    "status_to_date",
+    "case_complete_date"
+];
+
+export const exportCases = async (req, res) => {
+    try {
+        const { getBy, fields } = req.body;
+
+        if (!ALLOWED_EXPORT_TYPES.includes(getBy)) {
+            return res.status(400).json({
+                message: "Неизвестный тип выгрузки"
+            });
+        }
+
+        if (
+            !Array.isArray(fields) ||
+            fields.length === 0 ||
+            !fields.every(field =>
+                ALLOWED_EXPORT_FIELDS.includes(field)
+            )
+        ) {
+            return res.status(400).json({
+                message: "Некорректный список полей"
+            });
+        }
+
+        const uniqueFields = [...new Set(fields)];
+
+        const workbook = await service.createExportWorkbook(
+            getBy,
+            uniqueFields
+        );
+
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+
+        res.setHeader(
+            "Content-Disposition",
+            'attachment; filename="cases.xlsx"'
+        );
+
+        await workbook.xlsx.write(res);
+        res.end();
+
+    } catch (error) {
+        console.error("Ошибка выгрузки:", error);
+
+        if (res.headersSent) {
+            return res.end();
+        }
+
+        res.status(500).json({
+            message: "Ошибка при формировании файла"
         });
     }
 };

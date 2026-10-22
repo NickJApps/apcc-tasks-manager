@@ -22,6 +22,18 @@ export class Repository {
         return await this.collection.find({ case_in_progress: true }).toArray();
     }
 
+    //get all cases
+    async getAll() {
+        await this.connect();
+        return await this.collection.find().toArray();
+    }
+
+    //get all cases case_in _progress == false
+    async getAllClosed() {
+        await this.connect();
+        return await this.collection.find({ case_in_progress: false }).toArray();
+    }
+
     //get seller details by itn
     async getSellerDetailsByItn(itn) {
         await this.connect();

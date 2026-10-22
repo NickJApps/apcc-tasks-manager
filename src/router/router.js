@@ -22,5 +22,6 @@ router.put("/mark/:itn", controller.updateImportant);
 router.put("/completed/:itn", controller.updateCompleted);
 
 router.put("/update/:itn", controller.update);
+router.post("/export", controller.exportCases);
 
 export default router;
