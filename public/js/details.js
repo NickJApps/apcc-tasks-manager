@@ -209,6 +209,7 @@ function updateStatusLine(obj) {
 
     if(!obj.case_in_progress){
         $("#completed-step-circle").addClass("active");
+        $(".save-button").addClass("invisible");
     }
 }
 

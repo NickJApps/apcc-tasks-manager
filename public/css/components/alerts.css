@@ -1,0 +1,23 @@
+.swal2-styled {
+    border-radius: 6px !important;
+    padding: 10px 22px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+/* Кнопка подтверждения */
+.swal2-confirm {
+    background-color: #286b50 !important;
+}
+
+/* Кнопка отмены */
+.swal2-cancel {
+    background-color: #737b83 !important;
+}
+
+.swal2-html-container{
+    font-weight: 400 !important;
+    font-size: 12px !important;
+    font-family: 'Montserrat' !important;
+    text-transform: uppercase !important;
+}
