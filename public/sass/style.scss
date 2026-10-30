@@ -897,7 +897,6 @@ td {
     width: 50%;
     height: 30px;
     background-color: rgb(105 121 149);
-    ;
     color: #fff;
     text-transform: uppercase;
     font-family: $montserratFontFanily;
@@ -938,6 +937,27 @@ td {
 }
 
 .save-btn-container button:hover {
+    cursor: pointer;
+}
+
+.doc-btn-container {
+    display: flex;
+    margin-top: 10px;
+    justify-content: flex-end;
+}
+
+.doc-btn-container button {
+    width: 50%;
+    height: 30px;
+    background-color: rgb(105 121 149);
+    color: #fff;
+    text-transform: uppercase;
+    font-family: $montserratFontFanily;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.doc-btn-container button:hover{
     cursor: pointer;
 }
 

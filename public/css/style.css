@@ -970,6 +970,31 @@ td {
   cursor: pointer;
 }
 
+.doc-btn-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.doc-btn-container button {
+  width: 50%;
+  height: 30px;
+  background-color: rgb(105, 121, 149);
+  color: #fff;
+  text-transform: uppercase;
+  font-family: "Montserrat", serif;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.doc-btn-container button:hover {
+  cursor: pointer;
+}
+
 .purchase-subtitle {
   text-align: center;
   font-size: 16px;
