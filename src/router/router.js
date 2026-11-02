@@ -24,4 +24,6 @@ router.put("/completed/:itn", controller.updateCompleted);
 router.put("/update/:itn", controller.update);
 router.post("/export", controller.exportCases);
 
+router.get("/check/:ident", controller.getSellerInfo);
+
 export default router;

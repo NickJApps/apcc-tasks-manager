@@ -24,7 +24,7 @@ $(document).on("submit", "#create-target", async function (e) {
     });
 
     //Проверить имя на пустое поле 
-    if(!formData.seller_name){
+    if (!formData.seller_name) {
         showQuestion("Введите имя селлера");
         return;
     }
@@ -150,40 +150,54 @@ function getLocalDate() {
     ЗАГРУЗИТЬ ДАННЫЕ ПО СЕЛЛЕРУ
 ======================================*/
 
-$(document).on('click', '#check-btn', async function () {
+$(document).on("click", "#check-btn", async function () {
 
-    const itn = $('#itn').val().trim();
-    const psrn = $('#psrn').val().trim();
+    const itn = $("#itn").val()?.trim() || "";
+    const psrn = $("#psrn").val()?.trim() || "";
 
     const ident = itn || psrn;
 
     if (!ident) {
-        showQuestion("Введите ИНН или ОГРН/ОГРНИП");
+        showError("Введите ИНН или ОГРН/ОГРНИП");
         return;
     }
 
+    const $button = $(this);
+    $button.prop("disabled", true);
+
     try {
 
-        const response = await fetch(`/task/check/${ident}`, {
-            method: 'GET'
-        });
+        const response = await fetch(
+            `/check/${encodeURIComponent(ident)}`
+        );
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.message);
+            throw new Error(
+                result.message || "Не удалось получить данные продавца"
+            );
         }
 
-        $('#seller_name').val(result.name);
-        $('#itn').val(result.itn);
-        $('#region').val(result.region_address);
-        $('#address').val(result.region_address);
+        // Заполняем форму
+        $("#seller_name").val(result.name || "");
+        $("#itn").val(result.itn || "");
+        $("#psrn").val(result.psrn || "");
+        $("#address").val(result.address || "");
+        $("#region").val(result.region || "");
 
     } catch (error) {
 
-        console.error(error);
-        showError("Ошибка сохранения")
+        console.error("Ошибка получения данных продавца:", error);
+
+        showError(error.message || "Ошибка при получении данных продавца");
+
+    } finally {
+
+        $button.prop("disabled", false);
+
     }
+
 });
 
 /*======================================

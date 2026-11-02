@@ -1,6 +1,8 @@
 import Target from "../models/Target.js";
 import { Repository } from "../repository/Repository.js";
 import ExcelJS from "exceljs";
+import axios from "axios";
+import * as cheerio from "cheerio";
 
 export class Service {
 
@@ -245,6 +247,189 @@ export class Service {
         };
 
         return statuses[value] || value;
+    }
+
+
+    // Get seller info from Rusprofile
+    async getSellerInfo(ident) {
+
+        let type;
+        let url;
+
+        // Определяем тип продавца и формируем URL
+        if (/^\d{13}$/.test(ident)) {
+            type = "company";
+            url = `https://www.rusprofile.ru/id/${ident}/`;
+
+        } else if (/^\d{15}$/.test(ident)) {
+            type = "entrepreneur";
+            url = `https://www.rusprofile.ru/ip/${ident}`;
+
+        } else {
+            throw new Error("Введите корректный ОГРН или ОГРНИП");
+        }
+
+        try {
+
+            let response;
+
+            try {
+                response = await this.fetchRusprofile(url);
+
+            } catch (error) {
+
+                // Если ООО не найдено по прямому URL,
+                // используем Advanced Search
+                if (type === "company" && error.response?.status === 404) {
+
+                    url = await this.findCompanyUrl(ident);
+                    response = await this.fetchRusprofile(url);
+
+                } else {
+                    throw error;
+                }
+            }
+
+            const $ = cheerio.load(response.data);
+
+            const result = type === "company"
+                ? this.parseCompany($)
+                : this.parseIndividual($);
+
+            if (!result.name && !result.itn && !result.psrn) {
+                throw new Error("Не удалось найти продавца в Rusprofile");
+            }
+
+            return result;
+
+        } catch (error) {
+
+            console.error("Rusprofile error:", error.message);
+
+            // Сохраняем понятные ошибки, сформированные нашими методами
+            if (error.status) throw error;
+
+            const externalError = new Error(
+                error.response?.status === 404
+                    ? "Профиль продавца не найден"
+                    : "Не удалось получить данные из Rusprofile"
+            );
+
+            externalError.status =
+                error.response?.status === 404 ? 404 :
+                    error.code === "ECONNABORTED" ? 504 : 502;
+
+            throw externalError;
+        }
+    }
+
+    async fetchRusprofile(url) {
+
+        return await axios.get(url, {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+            },
+            timeout: 15000
+        });
+    }
+
+    async findCompanyUrl(ogrn) {
+
+        const response = await this.fetchRusprofile(
+            "https://www.rusprofile.ru/search-advanced?query=" +
+            encodeURIComponent(ogrn)
+        );
+
+        const $ = cheerio.load(response.data);
+
+        const results = [];
+
+        $(".list-element").each((i, el) => {
+
+            const item = $(el);
+
+            const resultOgrn = item
+                .find(".list-element__row-info span")
+                .filter((i, el) => $(el).text().includes("ОГРН:"))
+                .find("mark")
+                .text()
+                .trim();
+
+            // Проверяем точное совпадение ОГРН
+            if (resultOgrn !== ogrn) return;
+
+            const href = item
+                .find("a.list-element__title")
+                .attr("href");
+
+            if (href) {
+                results.push(href);
+            }
+        });
+
+        if (results.length === 0) {
+            const error = new Error(
+                "Организация по указанному ОГРН не найдена"
+            );
+            error.status = 404;
+            throw error;
+        }
+
+        if (results.length > 1) {
+            const error = new Error(
+                "Найдено несколько организаций с указанным ОГРН"
+            );
+            error.status = 409;
+            throw error;
+        }
+
+        return `https://www.rusprofile.ru${results[0]}`;
+    }
+
+    parseCompany($) {
+
+        const name = $('h1[itemprop="name"]').first().text().trim();
+        const itn = $("#clip_inn").text().trim();
+        const psrn = $("#clip_ogrn").text().trim();
+
+        const region = $('span[itemprop="addressRegion"]')
+            .first()
+            .text()
+            .trim();
+
+        const addressElement = $("#clip_address").clone();
+
+        addressElement.find(".copy_button, meta").remove();
+
+        const address = addressElement.text()
+            .replace(/\s+/g, " ")
+            .replace(/\s*,\s*/g, ", ")
+            .trim();
+
+        return { name, itn, psrn, region, address };
+    }
+
+    parseIndividual($) {
+
+        const name = $("#clip_name").text().trim();
+        const itn = $("#req_inn").text().trim();
+        const psrn = $("#req_ogrnip").text().trim();
+
+        const getInfo = (title) => {
+            return $("dt.company-info__title")
+                .filter((i, el) => $(el).text().trim() === title)
+                .first()
+                .next("dd.company-info__text")
+                .text()
+                .replace(/\s+/g, " ")
+                .replace(/\s*,\s*/g, ", ")
+                .trim();
+        };
+
+        const region = getInfo("Регион");
+        const address = getInfo("Адрес");
+
+        return { name, itn, psrn, region, address };
     }
 
 }

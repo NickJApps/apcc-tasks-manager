@@ -1,5 +1,4 @@
 import { Service } from "../service/Service.js";
-import ExcelJS from "exceljs";
 const service = new Service();
 
 export const home = async (req, res) => {
@@ -20,6 +19,7 @@ export const upload = (req, res) => {
     res.render("pages/upload");
 };
 
+//get seller details by itn
 export const getSellerDetailsByItn = async (req, res) => {
     const task = await service.getSellerDetailsByItn(req.params.itn);
 
@@ -32,11 +32,13 @@ export const getSellerDetailsByItn = async (req, res) => {
     res.json(task);
 };
 
+//get progress
 export const getProgress = async (req, res) => {
     const targets = await service.getAllInProgress();
     res.json(targets);
 };
 
+//create new target
 export const createTarget = async (req, res) => {
     try {
         const result = await service.createTarget(req.body);
@@ -54,6 +56,7 @@ export const createTarget = async (req, res) => {
     }
 };
 
+// search by database
 export const search = async (req, res) => {
     try {
         const { field, value } = req.query;
@@ -285,5 +288,38 @@ export const exportCases = async (req, res) => {
         res.status(500).json({
             message: "Ошибка при формировании файла"
         });
+    }
+};
+
+//get seller data Rusprofile
+export const getSellerInfo = async (req, res) => {
+
+    try {
+
+        const ident = req.params.ident;
+
+        if (!/^\d{10}$|^\d{12}$|^\d{13}$|^\d{15}$/.test(ident)) {
+            return res.status(400).json({
+                success: false,
+                message: "Некорректный ИНН или ОГРН/ОГРНИП"
+            });
+        }
+
+        const seller = await service.getSellerInfo(ident);
+
+        res.json({
+            success: true,
+            ...seller
+        });
+
+    } catch (error) {
+
+        console.error("Ошибка получения данных продавца:", error);
+
+        res.status(error.status || 500).json({
+            success: false,
+            message: error.message || "Не удалось получить данные продавца"
+        });
+
     }
 };
